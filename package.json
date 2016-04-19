@@ -5,9 +5,10 @@
     "type": "git",
     "url": "https://github.com/start-angular/sb-admin-angular"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bower": "^1.7.9"
+  },
   "devDependencies": {
-    "bower": "^1.7.9",
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
     "grunt-concurrent": "^0.5.0",
