@@ -320,6 +320,7 @@ module.exports = function (grunt) {
           src:['**']
         } ,
 
+
         {
           expand: true,
           cwd: '.tmp/images',
