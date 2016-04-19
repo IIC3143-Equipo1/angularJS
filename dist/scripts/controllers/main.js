@@ -1,1 +1,1 @@
-"use strict";angular.module("sbAdminApp").controller("MainCtrl",function($scope,$position){$scope.awesomeThings=["1","2","3"]});
+"use strict";angular.module("sbAdminApp").controller("MainCtrl",function($scope,$position){});
