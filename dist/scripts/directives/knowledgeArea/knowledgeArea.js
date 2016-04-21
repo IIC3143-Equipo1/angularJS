@@ -1,0 +1,1 @@
+"use strict";angular.module("sbAdminApp").directive("knowledgeArea",function(){return{templateUrl:"scripts/directives/knowledgeArea/knowledgeAreaV2.html",restrict:"E",replace:!0,scope:{name:"@"},controller:function($scope){$("#accordion"+$scope.name).collapse()}}});

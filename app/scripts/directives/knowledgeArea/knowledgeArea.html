@@ -1,0 +1,46 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Area conocimiento</h3>
+    </div>
+    <div class="panel-body">
+    <!-- Button -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="btnAddSurvey"></label>
+        <div class="col-md-4">
+            <button id="btnAddSurvey" name="btnAddSurvey" class="btn btn-primary">Agregar pregunta</button>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="txtQuestion">Pregunta</label>
+        <div class="col-md-6">
+            <input id="txtQuestion" name="txtQuestion" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
+
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="selQuestionType">Tipo pregunta</label>
+        <div class="col-md-6">
+            <select id="selQuestionType" name="selQuestionType" class="form-control">
+                <option value="0">Seleccione tipo pregunta</option>
+                <option value="1">Option one</option>
+                <option value="2">Option two</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Multiple Checkboxes (inline) -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="chkRequired"></label>
+        <div class="col-md-4">
+            <label class="checkbox" for="chkRequired">
+                <input type="checkbox" name="chkRequired" id="chkRequired" value="1">
+                Requerido?
+            </label>
+        </div>
+    </div>
+    </div>
+</div>

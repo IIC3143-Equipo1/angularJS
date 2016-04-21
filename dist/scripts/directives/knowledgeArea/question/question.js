@@ -1,0 +1,1 @@
+"use strict";angular.module("sbAdminApp").directive("kaQuestion",function(){return{templateUrl:"scripts/directives/knowledgeArea/question/question.html",restrict:"E",replace:!0,scope:{parent:"@",name:"@"}}});

@@ -393,6 +393,17 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
+  grunt.registerTask('usertest', [
+    'clean:dist',
+    'concurrent:dist',
+    'copy:dist',
+    'useminPrepare',
+    'concat:generated',
+    'cssmin:generated',
+    'uglify:generated',
+    'usemin'
+  ]);
+
   grunt.registerTask('build', [
     'clean:dist',
     'concurrent:dist',

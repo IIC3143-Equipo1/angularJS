@@ -97,6 +97,22 @@ angular
         templateUrl:'views/form.html',
         url:'/form'
     })
+    .state('dashboard.survey',{
+        controller: 'SurveyCtrl',
+        templateUrl:'views/survey/form.html',
+        url:'/survey',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'sbAdminApp',
+                        files:[
+                            'scripts/controllers/survey.js',
+                            'scripts/directives/knowledgeArea/knowledgeArea.js',
+                            'scripts/directives/knowledgeArea/question/question.js'
+                        ]
+                    })}
+    }})
       .state('dashboard.blank',{
         templateUrl:'views/pages/blank.html',
         url:'/blank'
@@ -155,4 +171,9 @@ angular
    })
   }]);
 
+/*.run(function($state,$rootScope) {
+
+        $state.go('dashboard.home');
+
+    });*/
     

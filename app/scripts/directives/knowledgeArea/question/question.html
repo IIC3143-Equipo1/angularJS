@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+      <h4 class="panel-title">
+    <!--<a href="javascript:;">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </a>-->
+          <div class="text-right">
+        <button type="button" class="close" aria-label="Remove">
+            <span aria-hidden="true">&times;</span>
+        </button>
+              </div>
+          <a role="button" data-toggle="collapse" data-parent="#accordion-{{parent}}" href="javascript:;" data-target="#{{name}}" aria-expanded="true" aria-controls="collapse-{{name}}">
+              Pregunta
+          </a>
+    </h4>
+      </div>
+    <div id="{{name}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{name}}">
+        <div class="panel-body">
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txtQuestion">Pregunta</label>
+            <div class="col-md-6">
+                <input id="txtQuestion" name="txtQuestion" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
+
+            </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="selQuestionType">Tipo pregunta</label>
+            <div class="col-md-6">
+                <select id="selQuestionType" name="selQuestionType" class="form-control">
+                    <option value="0">Seleccione tipo pregunta</option>
+                    <option value="1">Option one</option>
+                    <option value="2">Option two</option>
+                </select>
+            </div>
+        </div>
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="chkRequired"></label>
+            <div class="checkbox col-md-6">
+                <label>
+                    <input type="checkbox" id="chkRequired" value="1">   Requerido?
+                </label>
+            </div>
+            </div>
+
+    </div>
+        </div>
+</div>

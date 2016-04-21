@@ -1,9 +1,9 @@
 {
-  "name": "sb-admin",
-  "version": "0.0.0",
+  "name": "evaluat-e",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/start-angular/sb-admin-angular"
+    "url": "https://github.com/IIC3143-Equipo1/angularJS"
   },
   "dependencies": {
     "bower": "^1.7.9",

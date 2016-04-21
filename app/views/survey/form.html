@@ -1,0 +1,52 @@
+<form class="form-horizontal" ng-init="start()">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Crear encuesta</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txtName">Nombre</label>
+            <div class="col-md-6">
+                <input id="txtName" name="txtName" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="">
+
+            </div>
+        </div>
+
+        <!-- Button Drop Down -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="selCourse">Curso</label>
+            <div class="col-md-6">
+                <div class="input-group">
+                <select id="selCourse" name="selCourse" class="form-control">
+                    <option value="0">Seleccione curso</option>
+                    <option value="1">Option one</option>
+                    <option value="2">Option two</option>
+                </select>
+                <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Agregar</button>
+                    </span>
+            </div>
+            </div>
+        </div>
+
+        <!-- Appended Input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txtApKnowledgeArea">Área de Conocimiento</label>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input id="txtApKnowledgeArea" name="txtApKnowledgeArea" class="form-control" placeholder="Escriba area de conocimiento" type="text" required="">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Agregar</button>
+                    </span>
+                </div>
+                <p class="help-block">Si el área de conocimiento no existe, sera creada.</p>
+            </div>
+        </div>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <knowledge-area name="ka1"></knowledge-area>
+                <knowledge-area name="ka2"></knowledge-area>
+                <knowledge-area name="ka3"></knowledge-area>
+        </div>
+    </fieldset>
+</form>
