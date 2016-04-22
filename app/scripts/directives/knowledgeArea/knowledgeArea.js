@@ -16,7 +16,15 @@ angular.module('sbAdminApp')
                 'name': '@',
             },
             controller:function($scope){
+                $scope['count'+$scope.name] = 0;
                 $('#accordion'+$scope.name).collapse();
             }
         }
-    });
+    }).directive("addKnowledgeArea", function($compile){
+    return function(scope, element, attrs){
+        element.bind("click", function(){
+            scope.count++;
+            angular.element(document.getElementById('accordion')).append($compile('<knowledge-area name=ka'+scope.count+'></knowledge-area>')(scope));
+        });
+    };
+});

@@ -17,4 +17,12 @@ angular.module('sbAdminApp')
                 'name': '@'
             }
         }
+    }).directive("addQuestion", function($compile){
+        return function(scope, element, attrs){
+            element.bind("click", function(){
+                scope['count'+attrs.parentName]++;
+                console.log(scope['count'+attrs.parentName]);
+                angular.element(document.getElementById('accordion-'+attrs.parentName)).append($compile('<ka-question parent='+attrs.parentName+' name='+attrs.parentName+'question'+scope['count'+attrs.parentName]+'></ka-question>')(scope));
+            });
+        };
     });
