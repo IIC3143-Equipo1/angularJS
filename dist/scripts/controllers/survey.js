@@ -1,1 +1,1 @@
-"use strict";angular.module("sbAdminApp").controller("SurveyCtrl",function($scope){console.log("ctrl"),$scope.start=function(){$("#accordion").collapse()}});
+"use strict";angular.module("sbAdminApp").controller("SurveyCtrl",function($scope){$scope.start=function(){$("#accordion").collapse()}});
