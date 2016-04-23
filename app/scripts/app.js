@@ -109,7 +109,8 @@ angular
                         files:[
                             'scripts/controllers/survey.js',
                             'scripts/directives/knowledgeArea/knowledgeArea.js',
-                            'scripts/directives/knowledgeArea/question/question.js'
+                            'scripts/directives/knowledgeArea/question/question.js',
+                            'scripts/directives/knowledgeArea/answer/answer.js'
                         ]
                     })}
     }})

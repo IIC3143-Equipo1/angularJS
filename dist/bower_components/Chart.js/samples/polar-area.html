@@ -1,18 +1,4 @@
-<!doctype html>
-<html>
-	<head>
-		<title>Polar Area Chart</title>
-		<script src="../Chart.js"></script>
-	</head>
-	<body>
-		<div id="canvas-holder" style="width:30%">
-			<canvas id="chart-area" width="300" height="300"/>
-		</div>
-
-
-	<script>
-
-		var polarData = [
+<!doctype html> <html> <head> <title>Polar Area Chart</title> <script src="../Chart.js"></script>  <body> <div id="canvas-holder" style="width:30%"> <canvas id="chart-area" width="300" height="300"> </div> <script>var polarData = [
 				{
 					value: 300,
 					color:"#F7464A",
@@ -51,10 +37,4 @@
 				window.myPolarArea = new Chart(ctx).PolarArea(polarData, {
 					responsive:true
 				});
-			};
-
-
-
-	</script>
-	</body>
-</html>
+			};</script>  

@@ -2,6 +2,14 @@
 body {
     padding-bottom: 20px;
 }
+.notification-msg {
+  position: fixed;
+  top: 40px;
+  right: 0px;
+  /* bring your own prefixes */
+  transform: translate(0px, 0px);
+  z-index: 99999
+}
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,

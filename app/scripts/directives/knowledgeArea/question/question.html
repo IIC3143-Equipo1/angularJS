@@ -5,12 +5,12 @@
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     </a>-->
           <div class="text-right">
-        <button type="button" class="close" aria-label="Remove">
+        <button type="button" class="close" ng-click="deleteQuestion(name,parent)" aria-label="Remove">
             <span aria-hidden="true">&times;</span>
         </button>
               </div>
           <a role="button" data-toggle="collapse" data-parent="#accordion-{{parent}}" href="javascript:;" data-target="#{{name}}" aria-expanded="true" aria-controls="collapse-{{name}}">
-              Pregunta
+            <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
           </a>
     </h4>
       </div>
@@ -18,29 +18,36 @@
         <div class="panel-body">
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="txtQuestion">Pregunta</label>
+            <label class="col-md-4 control-label" for="{{name}}-txtQuestion">Pregunta</label>
             <div class="col-md-6">
-                <input id="txtQuestion" name="txtQuestion" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
+                <input id="{{name}}-txtQuestion" name="{{name}}-txtQuestion" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
 
             </div>
         </div>
 
         <!-- Select Basic -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="selQuestionType">Tipo pregunta</label>
+            <label class="col-md-4 control-label" for="{{name}}-selQuestionType">Tipo pregunta</label>
             <div class="col-md-6">
-                <select id="selQuestionType" name="selQuestionType" class="form-control">
+                <select id="{{name}}-selQuestionType"ng-init="question.type = question.type || '0'" ng-model="question.type" name="{{name}}-selQuestionType" class="form-control">
                     <option value="0">Seleccione tipo pregunta</option>
-                    <option value="1">Option one</option>
-                    <option value="2">Option two</option>
+                    <option value="1">Abierta</option>
+                    <option value="2">Unica respuesta</option>
+                    <option value="3">Selección multiple</option>
                 </select>
             </div>
         </div>
+            <div class="form-group" id="{{name}}-answers" ng-show='question.type == 2 || question.type ==3'>
+                <label class="col-md-4 control-label" for="{{name}}-btnAddAnswer"></label>
+                <div class="col-md-6">
+                    <button id="{{name}}-btnAddAnswer" data-toggle="modal" data-target="#answer-options-modal" name="{{name}}-btnAddAnswer" class="btn btn-primary" formnovalidate>Opciones de respuesta</button>
+                </div>
+            </div>
             <div class="form-group">
-            <label class="col-md-4 control-label" for="chkRequired"></label>
+            <label class="col-md-4 control-label" for="{{name}}-chkRequired"></label>
             <div class="checkbox col-md-6">
                 <label>
-                    <input type="checkbox" id="chkRequired" value="1">   Requerido?
+                    <input type="checkbox" id="{{name}}-chkRequired" value="1">   Requerido?
                 </label>
             </div>
             </div>

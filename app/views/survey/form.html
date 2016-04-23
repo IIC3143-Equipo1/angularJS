@@ -1,14 +1,18 @@
-<form class="form-horizontal" ng-init="start()">
-    <fieldset>
+<div id="alert" class="notification-msg"></div>
 
+<form class="form-horizontal" ng-init="init()">
+    <fieldset>
         <!-- Form Name -->
-        <legend>Crear encuesta</legend>
+        <legend><div class="container-fluid"><p class="navbar-text">Crear encuesta</p>
+            <button type="button" class="btn btn-default navbar-btn navbar-right">Guardar</button>
+        </div>
+        </legend>
 
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="txtName">Nombre</label>
             <div class="col-md-6">
-                <input id="txtName" name="txtName" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="">
+                <input id="txtName" name="txtName" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="required">
 
             </div>
         </div>
@@ -20,11 +24,11 @@
                 <div class="input-group">
                 <select id="selCourse" name="selCourse" class="form-control">
                     <option value="0">Seleccione curso</option>
-                    <option value="1">Option one</option>
-                    <option value="2">Option two</option>
+                    <option value="1">A1</option>
+                    <option value="2">B1</option>
                 </select>
                 <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Agregar</button>
+                      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#course-modal">Agregar</button>
                     </span>
             </div>
             </div>
@@ -40,13 +44,73 @@
                       <button class="btn btn-default" type="button" add-knowledge-area>Agregar</button>
                     </span>
                 </div>
-                <p class="help-block">Si el área de conocimiento no existe, sera creada.</p>
+                <p class="help-block">Si el área de conocimiento no existe, será creada.</p>
             </div>
         </div>
+
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <!--<knowledge-area name="ka1"></knowledge-area>
+            <!--<knowledge-area name="ka1"></knowledge-area>
                 <knowledge-area name="ka2"></knowledge-area>
                 <knowledge-area name="ka3"></knowledge-area>-->
         </div>
     </fieldset>
 </form>
+
+
+<!-- Modal -->
+<div class="modal fade" id="course-modal" tabindex="-1" role="dialog" aria-labelledby="course-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Crear curso</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="answer-options-modal" tabindex="-1" role="dialog" aria-labelledby="answer-options-modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Opciones de respuestas</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                <!-- Appended Input-->
+                <div class="form-group">
+                    <!--<label class="col-md-4 control-label" for="txtAnswer">Respuesta</label>-->
+                    <div class="container-fluid">
+                        <div class="input-group">
+                            <input id="txtAnswer" name="txtAnswer" class="form-control" placeholder="Escriba una opción de respuesta" type="text" required="">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" ng-click="addAnswerOption()">Agregar</button>
+                    </span>
+                </div>
+                </div>
+            </div>
+
+                        <ul class="list-group" id="listAnswerOptions">
+                        </ul>
+                        <!--<div class="panel-group" id="listAnswerOptions">
+                        </div>-->
+
+                    </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
