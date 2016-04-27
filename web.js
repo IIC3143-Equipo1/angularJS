@@ -11,7 +11,7 @@
 	app.get('/users', function(req, res) {
 	     res.json({ message: 'Object created!' });
 	});
-	var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+	//var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
 
 	/*var client = new pg.Client(connectionString);
 	client.connect();
