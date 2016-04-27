@@ -18,6 +18,7 @@
 	var query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
 	query.on('end', function() { client.end(); });*/
 
+app.get('/connect', function(req, res) {
 	pg.connect(process.env.DATABASE_URL, function(err, client) {
 	  if (err) throw err;
 	  console.log('Connected to postgres! Getting schemas...');
@@ -28,6 +29,7 @@
 	      console.log(JSON.stringify(row));
 	    });
 	});
+});
 
 
 
