@@ -24,7 +24,7 @@ app.get('/connect', function(req, res) {
 	  console.log('Connected to postgres! Getting schemas...');
 
 	  client
-	    .query('SELECT table_schema,table_name FROM information_schema.tables;')
+	    .query('SELECT table_schema,table_name FROM information_schema.tables limit 0 offset 1;')
 	    .on('row', function(row) {
 	      console.log(JSON.stringify(row));
 	    });
