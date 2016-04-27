@@ -6,4 +6,8 @@
   //app.use(gzippo.staticGzip("" + __dirname + "/app"));
 app.use(express.static("" + __dirname + "/dist"));
 
+app.get('/users', function(req, res) {
+     res.json({ message: 'Object created!' });
+});
+
 app.listen(process.env.PORT || 5000);
