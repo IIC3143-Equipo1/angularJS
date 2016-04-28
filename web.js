@@ -20,6 +20,9 @@
 
 app.get('/test', function(req, res) {
 // get the total number of visits today (including the current visit)
+      	var client = new pg.Client(connectionString);
+	client.connect();
+
       client.query('SELECT * FROM items ORDER BY text', function(err, result) {
 
         // handle an error from the query
