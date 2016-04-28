@@ -27,10 +27,10 @@ app.get('/test', function(req, res) {
       client.query('SELECT * FROM items ORDER BY text', function(err, result) {
 
         // handle an error from the query
-        if(handleError(err)) return;
+        //if(handleError(err)) return;
 
         // return the client to the connection pool for other requests to reuse
-        done();
+        //done();
         res.json({ message: result.rows[0] });
       });
 });
