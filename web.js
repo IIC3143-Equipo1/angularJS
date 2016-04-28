@@ -20,6 +20,7 @@
 
 app.get('/test', function(req, res) {
 // get the total number of visits today (including the current visit)
+	var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
       	var client = new pg.Client(connectionString);
 	client.connect();
 
