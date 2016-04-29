@@ -16,11 +16,11 @@ angular.module('sbAdminApp')
                 'name': '@'
             },
             controller:function($scope){
-                $scope.deleteAnswer = function(event){
+                $scope.delete_answer = function(event){
                     var preAnswer = event.currentTarget.parentNode.parentNode.innerText;
                     var answer = preAnswer.substr(2);
                     console.log($scope.$parent);
-                    $scope.$parent.listAnswerOptions[$scope.$parent.currentAnswer] =$.grep($scope.$parent.listAnswerOptions[$scope.$parent.currentAnswer],
+                    $scope.$parent.list_answer_options[$scope.$parent.currentAnswer] =$.grep($scope.$parent.list_answer_options[$scope.$parent.current_answer],
                         function(value) {
                             return value != answer.toLowerCase();
                         });

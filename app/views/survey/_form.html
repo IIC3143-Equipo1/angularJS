@@ -3,32 +3,32 @@
 <form class="form-horizontal" ng-init="init()">
     <fieldset>
         <!-- Form Name -->
-        <legend><div class="container-fluid"><p class="navbar-text">Crear encuesta</p>
-            <button type="button" class="btn btn-default navbar-btn navbar-right">Guardar</button>
+        <legend><div class="container-fluid">
+            <button type="button" ng-click="survey_save()" class="btn btn-default navbar-btn navbar-right">Guardar</button>
         </div>
         </legend>
 
         <!-- Text input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="txtName">Nombre</label>
+            <label class="col-md-4 control-label" for="txt_name">Nombre</label>
             <div class="col-md-6">
-                <input id="txtName" name="txtName" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="required">
+                <input id="txt_name" name="txt_name" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="required">
 
             </div>
         </div>
 
         <!-- Button Drop Down -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="selCourse">Curso</label>
+            <label class="col-md-4 control-label" for="sel_course">Curso</label>
             <div class="col-md-6">
                 <div class="input-group">
-                <select id="selCourse" name="selCourse" class="form-control">
+                <select id="sel_course" name="sel_course" class="form-control">
                     <option value="0">Seleccione curso</option>
                     <option value="1">A1</option>
                     <option value="2">B1</option>
                 </select>
                 <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#course-modal">Agregar</button>
+                      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#course_modal">Agregar</button>
                     </span>
             </div>
             </div>
@@ -36,10 +36,10 @@
 
         <!-- Appended Input-->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="txtApKnowledgeArea">Área de Conocimiento</label>
+            <label class="col-md-4 control-label" for="txt_knowledge_area">Área de Conocimiento</label>
             <div class="col-md-6">
                 <div class="input-group">
-                    <input id="txtApKnowledgeArea" name="txtApKnowledgeArea" class="form-control" placeholder="Escriba area de conocimiento" type="text" required="">
+                    <input id="txt_knowledge_area" name="txt_knowledge_area" class="form-control" placeholder="Escriba area de conocimiento" type="text" required="">
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="button" add-knowledge-area>Agregar</button>
                     </span>
@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel-group" id="list_kw_areas" role="tablist" aria-multiselectable="true">
             <!--<knowledge-area name="ka1"></knowledge-area>
                 <knowledge-area name="ka2"></knowledge-area>
                 <knowledge-area name="ka3"></knowledge-area>-->
@@ -58,7 +58,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="course-modal" tabindex="-1" role="dialog" aria-labelledby="course-modal">
+<div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -77,7 +77,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="answer-options-modal" tabindex="-1" role="dialog" aria-labelledby="answer-options-modal">
+<div class="modal fade" id="answer_options_modal" tabindex="-1" role="dialog" aria-labelledby="answer_options_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -91,15 +91,15 @@
                     <!--<label class="col-md-4 control-label" for="txtAnswer">Respuesta</label>-->
                     <div class="container-fluid">
                         <div class="input-group">
-                            <input id="txtAnswer" name="txtAnswer" class="form-control" placeholder="Escriba una opción de respuesta" type="text" required="">
+                            <input id="txt_answer" name="txt_answer" class="form-control" placeholder="Escriba una opción de respuesta" type="text" required="">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" ng-click="addAnswerOption()">Agregar</button>
+                      <button class="btn btn-default" type="button" ng-click="add_answer_option()">Agregar</button>
                     </span>
                 </div>
                 </div>
             </div>
 
-                        <ul class="list-group" id="listAnswerOptions">
+                        <ul class="list-group" id="list_answer_options">
                         </ul>
                         <!--<div class="panel-group" id="listAnswerOptions">
                         </div>-->

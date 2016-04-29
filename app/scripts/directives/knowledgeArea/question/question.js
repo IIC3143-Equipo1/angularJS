@@ -17,14 +17,14 @@ angular.module('sbAdminApp')
                 'name': '@'
             },
             controller:function($scope){
-                $scope.deleteQuestion = function(name,parent) {
+                $scope.delete_question = function(name,parent) {
                     $('#'+name).parent().remove();
                     //$scope.$parent['count-'+parent]--;
-                    $scope.$parent.$parent.listAnswerOptions[name] = [];
+                    $scope.$parent.$parent.list_answer_options[name] = [];
                 };
 
-                $scope.isNotOpenQuestion = function (name) {
-                    var value = $('#'+name+'-selQuestionType').val();
+                $scope.is_not_open_question = function (name) {
+                    var value = $('#'+name+'-sel_question_type').val();
                     if(value == 1 || value == 2)
                     {
                         return true;
@@ -39,10 +39,10 @@ angular.module('sbAdminApp')
     }).directive("addQuestion", function($compile){
         return function(scope, element, attrs){
             element.bind("click", function(){
-                scope['count-'+attrs.parentName]++;
-                angular.element(document.getElementById('accordion-'+attrs.parentName)).append($compile('<ka-question parent='+attrs.parentName+' name='+attrs.parentName+'-question'+scope['count-'+attrs.parentName]+'></ka-question>')(scope));
-                $('#accordion-'+attrs.parentName+' .collapse').removeClass('in');
-                $('#accordion-'+attrs.parentName).sortable({
+                scope['count_'+attrs.parentName]++;
+                angular.element(document.getElementById('list_'+attrs.parentName)).append($compile('<ka-question parent='+attrs.parentName+' name='+attrs.parentName+'_question'+scope['count_'+attrs.parentName]+'></ka-question>')(scope));
+                $('#list_'+attrs.parentName+' .collapse').removeClass('in');
+                $('#list_'+attrs.parentName).sortable({
                     handle: ".panel-heading"
                 });
             });

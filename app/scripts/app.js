@@ -13,6 +13,8 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
+    'ngResource',
+    'ngCookies',
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -99,7 +101,7 @@ angular
     })
     .state('dashboard.survey',{
         controller: 'SurveyCtrl',
-        templateUrl:'views/survey/form.html',
+        templateUrl:'views/survey/survey.html',
         url:'/survey',
         resolve: {
             loadMyDirectives:function($ocLazyLoad){
@@ -107,6 +109,41 @@ angular
                     {
                         name:'sbAdminApp',
                         files:[
+                            'scripts/services/survey.js',
+                            'scripts/controllers/survey.js',
+                            'scripts/directives/pagination/pagination.js'
+                        ]
+                    })}
+    }})
+    .state('dashboard.survey.new',{
+        controller: 'SurveyCtrl',
+        templateUrl:'views/survey/survey-add.html',
+        url:'/survey/new',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'sbAdminApp',
+                        files:[
+                            'scripts/services/survey.js',
+                            'scripts/controllers/survey.js',
+                            'scripts/directives/knowledgeArea/knowledgeArea.js',
+                            'scripts/directives/knowledgeArea/question/question.js',
+                            'scripts/directives/knowledgeArea/answer/answer.js'
+                        ]
+                    })}
+    }})
+    .state('dashboard.survey.edit',{
+        controller: 'SurveyCtrl',
+        templateUrl:'views/survey/survey-edit.html',
+        url:'/survey/edit',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'sbAdminApp',
+                        files:[
+                            'scripts/services/survey.js',
                             'scripts/controllers/survey.js',
                             'scripts/directives/knowledgeArea/knowledgeArea.js',
                             'scripts/directives/knowledgeArea/question/question.js',

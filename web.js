@@ -1,73 +1,59 @@
-//var gzippo = require('gzippo');
-  var express = require('express');
-  var app = express();
-  var pg = require('pg');
- 
-   pg.defaults.ssl = true;
-  //app.use(express.logger('dev'));
-  //app.use(gzippo.staticGzip("" + __dirname + "/app"));
-	app.use(express.static("" + __dirname + "/dist"));
+var debug = require('debug')('express-example');
+var express = require('express');
+var path = require('path');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var models = require("./server/models");
+var routes = require("./server/routes");
+var survey = require("./server/routes/survey");
+var cookieParser = require('cookie-parser');
+var session = require('cookie-session');
+var csrf = require('csurf');
 
-	app.get('/users', function(req, res) {
-	     res.json({ message: 'Object created!' });
+var app = express();
+var api_prefix = '/api/v1.0'
+
+app.set('port', process.env.PORT || 5000);
+//app.use(express.static("" + __dirname + "/dist"));
+app.use(express.static(path.join(__dirname, 'app')));
+
+// development only
+if ('development' == app.get('env')) {
+	app.use(bodyParser());
+	app.use(methodOverride());
+	app.use(function(err, req, res, next) {
+	  console.log(err);
+	  next();
 	});
-	//var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+}
 
-	/*var client = new pg.Client(connectionString);
-	client.connect();
-	var query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-	query.on('end', function() { client.end(); });*/	
-
-app.get('/test', function(req, res) {
-// get the total number of visits today (including the current visit)
-	var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
-      	var client = new pg.Client(connectionString);
-	client.connect();
-
-      client.query('SELECT * FROM items ORDER BY text', function(err, result) {
-
-        // handle an error from the query
-        //if(handleError(err)) return;
-
-        // return the client to the connection pool for other requests to reuse
-        //done();
-        res.json({ message: result.rows[0] });
-      });
+app.use(session({
+    secret: '5h4r1ng15C4r1ng'
+}));
+app.use(cookieParser('secret'));
+app.use(csrf());
+app.use(function (req, res, next) {
+    res.cookie("XSRF-TOKEN",req.csrfToken());
+    return next();
 });
 
-app.get('/connect', function(req, res) {
-	/*pg.connect(process.env.DATABASE_URL, function(err, client) {
-	  if (err) throw err;
-	  console.log('Connected to postgres! Getting schemas...');
+app.get('/', routes.index);
 
-	  client
-	    .query('SELECT table_schema,table_name FROM information_schema.tables limit 1;')
-	    .on('row', function(row) {
-	      console.log(JSON.stringify(row));
-	    });
-	});*/
-	var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+app.get(api_prefix + '/survey',        survey.allSurveis);
+app.post(api_prefix + '/survey', 	   survey.createSurvey);
+app.get(api_prefix + '/survey/:id',    survey.getSurvey);
+app.put(api_prefix + '/survey/:id',    survey.updateSurvey);
+app.delete(api_prefix + '/survey/:id', survey.deleteSurvey);
 
-	var client = new pg.Client(connectionString);
-	client.connect();
-	//var query = client.query('CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-	client.query("INSERT INTO items(text,complete) values($1, $2)", ['Test Number One', true]);
-    client.query("INSERT INTO items(text,complete) values($1, $2)", ['Test Number Two', false]);
-
-    var query = client.query("SELECT * FROM items ORDER BY text");
-	query.on("row", function (row, result) {
-	    result.addRow(row);
-	});
-
-	query.on('end', function(result) { 
-		//console.log('Created')
-		 console.log(JSON.stringify(result.rows, null, "    "));
-		 JSON.stringify(result.rows, null, "    ");
-		 res.json({ message: 'Object created!' });
-		client.end(); 
-	});
+// middleware to use for all requests
+app.use(function(req, res, next) {
+    // do logging
+    console.log('Something is happening.');
+    next(); // make sure we go to the next routes and don't stop here
 });
 
-
-
-	app.listen(process.env.PORT || 5000);
+models.sequelize.sync().then(function () {
+  var server = app.listen(app.get('port'), function() {
+    debug('Express server listening on port ' + server.address().port);
+  });
+});

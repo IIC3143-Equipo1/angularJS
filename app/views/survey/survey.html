@@ -1,0 +1,41 @@
+<a ui-sref="dashboard.survey.new" class="btn-primary btn-lg nodecoration">Agregar nueva encuesta</a>
+<div class="col-xs-8 col-sm-9 col-md-9" data-ng-init="init()">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><h4>#</h4></td>
+                <td><h4>Id</h4></td>
+                <td><h4>Name</h4></td>
+                <td><div class="btn-group">
+                        <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
+                            Acciones
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" ng-click="survey_delete()" href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="survey in surveis">
+                <td><input ng-model="selection[survey.id]" type="checkbox"></td>
+                <td style="text-align:center">{{sno($index)}}</td>
+                <td>{{survey.id}}</td>
+                <td>{{survey.name}}</td>
+                <td>
+                    <a class="btn btn-primary" ui-sref="viewSurvey({id:survey.id})">Ver</a>
+                    <!--<a class="btn btn-danger"  ng-click="deleteCustomer(customer)">Delete</a>-->
+                </td>
+            </tbody>
+            </tr>
+            <tr ng-show="surveis.length == 0">
+                <td colspan="4" style="text-align:center">No Records Found..!</td>
+            </tr>
+        </table>
+       <paginate servicename="Survey" model="surveis" src="all_surveis"></paginate>
+    </div>
+</div>
