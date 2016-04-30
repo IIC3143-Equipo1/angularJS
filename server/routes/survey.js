@@ -14,10 +14,11 @@ exports.allSurveis = function(req, res) {
   models.Survey.findAndCountAll({
     limit: 5, 
     offset: page
-    //attributes: { include: [[Sequelize.fn('COUNT', Sequelize.col('id')), 'total']] }
+    //attributes: { include: [[models.sequelize.fn('COUNT', models.sequelize.col('id')), 'total']] },
+    //group: [models.sequelize.col('id')]
   }).then(function(surveis) {
-    surveis.current_page = req.query.page;
-    res.json(surveis);
+      surveis.current_page = parseInt(req.query.page,10);
+      res.json(surveis);
   });
 };
 

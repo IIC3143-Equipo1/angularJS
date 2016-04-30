@@ -68,9 +68,9 @@ angular.module('sbAdminApp')
               return from + index;
           }
 
-          $scope.init = function(){
+          $scope.load_grid = function(){
 
-              Survey.get({page: 1}, function (response) {
+              Survey.get({}, function (response) {
                 /*response().then(function(tt)
                 {
                   console.log(tt);
@@ -81,6 +81,10 @@ angular.module('sbAdminApp')
                   $scope.surveis = [];
               });
 
+          };
+
+          $scope.init = function(){
+
               $('#list_kw_areas').collapse();
 
               var knowledge_areas = [
@@ -89,7 +93,7 @@ angular.module('sbAdminApp')
                   "Sociales",
                   "Etica",
                   "Ingles",
-                  "EspaÃ±ol"
+                  "Español"
               ];
 
               $( "#txt_knowledge_area" ).autocomplete({
@@ -115,7 +119,9 @@ angular.module('sbAdminApp')
                   }
                   $scope.current_answer = e.relatedTarget.id;
               });
-          };
+
+          };  
+
 
           $scope.delete_surveis=function(){
             if(popupService.showPopup('Estás seguro?')){
@@ -156,7 +162,7 @@ angular.module('sbAdminApp')
             $scope.survey.$save(function(){
               $state.go('dashboard.survey');
             });
-          }
+          };
 
           $scope.survey_edit = function()
           {

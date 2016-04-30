@@ -1,5 +1,5 @@
-<a ui-sref="dashboard.survey.new" class="btn-primary btn-lg nodecoration">Agregar nueva encuesta</a>
-<div class="col-xs-8 col-sm-9 col-md-9" data-ng-init="init()">
+<a ui-sref="dashboard.survey_new" class="btn-primary btn-lg nodecoration">Agregar nueva encuesta</a>
+<div class="col-xs-8 col-sm-9 col-md-9" data-ng-init="load_grid()">
     <div class="row">
         <table class="table">
             <thead>
@@ -8,14 +8,15 @@
                 <td style="text-align:center"><h4>#</h4></td>
                 <td><h4>Id</h4></td>
                 <td><h4>Name</h4></td>
-                <td><div class="btn-group">
-                        <a class="btn btn-danger dropdown-toggle" data-toggle="dropdown" href="#">
-                            Acciones
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a tabindex="-1" ng-click="survey_delete()" href="#">Delete</a></li>
-                        </ul>
+                <td>    
+                    <div class="dropdown">
+                      <button class="btn btn-danger dropdown-toggle" type="button" id="dropdown_actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Acciones
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdown_actions">
+                        <li><a tabindex="-1" ng-click="survey_delete()" href="#">Delete</a></li>
+                      </ul>
                     </div>
                 </td>
             </tr>
@@ -27,7 +28,7 @@
                 <td>{{survey.id}}</td>
                 <td>{{survey.name}}</td>
                 <td>
-                    <a class="btn btn-primary" ui-sref="viewSurvey({id:survey.id})">Ver</a>
+                    <a class="btn btn-primary" ui-sref="dashboard.survey_edit({id:survey.id})">Editar</a>
                     <!--<a class="btn btn-danger"  ng-click="deleteCustomer(customer)">Delete</a>-->
                 </td>
             </tbody>

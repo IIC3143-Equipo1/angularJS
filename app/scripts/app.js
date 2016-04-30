@@ -115,7 +115,7 @@ angular
                         ]
                     })}
     }})
-    .state('dashboard.survey.new',{
+    .state('dashboard.survey_new',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey-add.html',
         url:'/survey/new',
@@ -133,10 +133,10 @@ angular
                         ]
                     })}
     }})
-    .state('dashboard.survey.edit',{
+    .state('dashboard.survey_edit',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey-edit.html',
-        url:'/survey/edit',
+        url:'/survey/:id/edit',
         resolve: {
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(

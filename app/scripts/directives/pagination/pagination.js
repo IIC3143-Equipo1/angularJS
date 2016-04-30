@@ -50,8 +50,10 @@ angular.module('sbAdminApp')
             var paginate = function (results, oldResults) {
                 if (oldResults === results) return;
                 scope.current_page = results.current_page;
-                scope.total = results.total;
-                scope.totalPages = results.last_page;
+                scope.total = results.count;
+                var last_page = scope.total / 5;
+                var last_pages_val = Math.ceil(last_page);
+                scope.totalPages = last_pages_val;
                 scope.pages = [];
 
                 for (var i = 1; i <= scope.totalPages; i++) {
@@ -66,11 +68,11 @@ angular.module('sbAdminApp')
                 service.get({
                     page: newPage
                 }, function (response) {
-                    angular.copy(response[scope.model].data, scope.allData.data);
-                    scope.allData.current_page = response[scope.model].current_page;
+                    angular.copy(response, scope.allData);
+                    scope.allData.current_page = response.current_page;
                 }, function (error) {
                     console.log(error);
-                    scope.allData.data = [];
+                    scope.allData = [];
                 });
 
             };

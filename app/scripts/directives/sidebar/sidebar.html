@@ -16,10 +16,10 @@
             <li ui-sref-active="active">
                 <a ui-sref="dashboard.form"><i class="fa fa-edit fa-fw"></i> Forms</a>
             </li>-->
-            <li ng-class="{active: collapseVar==1}">{{dropDown}}
-                <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> Configuraci&oacute;n<span
+            <li>
+                <a href="" data-toggle="collapse" data-target="#menu_configuration"><i class="fa fa-wrench fa-fw"></i> Configuraci&oacute;n<span
                         class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=1">
+                <ul id="menu_configuration" class="collapse nav nav-second-level">
                     <li ui-sref-active="active">
                         <a ui-sref="dashboard.panels-wells">Estudiantes</a>
                     </li>

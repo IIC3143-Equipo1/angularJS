@@ -52,7 +52,7 @@ angular.module('sbAdminApp')
         element.bind("click", function(){
            var name = angular.element(document.getElementById('txt_knowledge_area')).val();
            //scope.listAnswerOptions['ka-'+name];
-           scope.add_Knowledge_area(name);
+           scope.add_knowledge_area(name);
         });
     };
 });
