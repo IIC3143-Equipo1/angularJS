@@ -13,10 +13,18 @@ angular.module('sbAdminApp')
             restrict: 'E',
             replace: true,
             scope: {
-                'parent': '@',
-                'name': '@'
+                'parent'   :'@',
+                'name'     :'@',
+                'kw'       :'@',
+                'quest'    :'@'
             },
             controller:function($scope){
+                if($scope.$parent.survey)
+                {
+                    $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
+                    $scope.questionx.type = String($scope.questionx.type);
+                    $scope.questionx.required = Boolean($scope.questionx.required);
+                }
                 $scope.delete_question = function(name,parent) {
                     $('#'+name).parent().remove();
                     //$scope.$parent['count-'+parent]--;
@@ -34,7 +42,7 @@ angular.module('sbAdminApp')
                     }
 
                 };
-            }
+          }
         }
     }).directive("addQuestion", function($compile){
         return function(scope, element, attrs){

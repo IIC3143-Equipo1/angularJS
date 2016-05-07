@@ -2,7 +2,8 @@ var models = require('../models');
 
 exports.createSurvey = function(req, res) {
   models.Survey.create({
-    name: req.body.email
+    name: req.body.name,
+    id_course: req.body.id_course
   }).then(function(survey) {
     res.json(survey);
   });
@@ -12,6 +13,7 @@ exports.createSurvey = function(req, res) {
 exports.allSurveis = function(req, res) {
   var page = (req.query.page * 5) - 5;
   models.Survey.findAndCountAll({
+    order: 'id ASC',
     limit: 5, 
     offset: page
     //attributes: { include: [[models.sequelize.fn('COUNT', models.sequelize.col('id')), 'total']] },

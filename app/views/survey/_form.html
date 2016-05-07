@@ -5,7 +5,7 @@
     <fieldset>
         <!-- Form Name -->
         <legend><div class="container-fluid">
-            <button type="button" ng-click="survey_save()" class="btn btn-default navbar-btn navbar-right">Guardar</button>
+            <button type="button" ng-click="survey_save()" class="btn btn-default navbar-btn navbar-right" formnovalidate>Guardar</button>
         </div>
         </legend>
 
@@ -13,7 +13,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="txt_name">Nombre</label>
             <div class="col-md-6">
-                <input id="txt_name" name="txt_name" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="required">
+                <input id="txt_name" name="txt_name" ng-model="survey.name" type="text" placeholder="Escriba nombre de la encuesta" class="form-control input-md" required="required">
 
             </div>
         </div>
@@ -23,7 +23,7 @@
             <label class="col-md-4 control-label" for="sel_course">Curso</label>
             <div class="col-md-6">
                 <div class="input-group">
-                <select id="sel_course" name="sel_course" class="form-control">
+                <select id="sel_course" ng-model="survey.id_course" name="sel_course" class="form-control">
                     <option value="0">Seleccione curso</option>
                     <option value="1">A1</option>
                     <option value="2">B1</option>

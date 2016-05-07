@@ -20,8 +20,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="{{name}}_txt_question">Pregunta</label>
             <div class="col-md-6">
-                <input id="{{name}}_txt_question" name="{{name}}_txt_question" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
-
+                <input id="{{name}}_txt_question" ng-model="questionx.text" name="{{name}}_txt_question" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
             </div>
         </div>
 
@@ -29,7 +28,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="{{name}}_sel_question_type">Tipo pregunta</label>
             <div class="col-md-6">
-                <select id="{{name}}_sel_question_type"ng-init="question.type = question.type || '0'" ng-model="question.type" name="{{name}}_sel_question_type" class="form-control">
+                <select id="{{name}}_sel_question_type" ng-init="questionx.type = questionx.type || '0'" ng-model="questionx.type" name="{{name}}_sel_question_type" class="form-control">
                     <option value="0">Seleccione tipo pregunta</option>
                     <option value="1">Abierta</option>
                     <option value="2">Unica respuesta</option>
@@ -37,8 +36,8 @@
                 </select>
             </div>
         </div>
-            <div class="form-group" id="{{name}}_answers" ng-show='question.type == 2 || question.type ==3'>
-                <label class="col-md-4 control-label" for="{{name}}-btn_add_answer"></label>
+            <div class="form-group" id="{{name}}_answers" ng-show='questionx.type == 2 || questionx.type ==3'>
+                <label class="col-md-4 control-label" for="{{name}}_btn_add_answer"></label>
                 <div class="col-md-6">
                     <button id="{{name}}_btn_add_answer" data-toggle="modal" data-target="#answer_options_modal" name="{{name}}_btn_add_answer" class="btn btn-primary" formnovalidate>Opciones de respuesta</button>
                 </div>
@@ -47,7 +46,7 @@
             <label class="col-md-4 control-label" for="{{name}}_chkRequired"></label>
             <div class="checkbox col-md-6">
                 <label>
-                    <input type="checkbox" id="{{name}}_chkRequired" value="1">   Requerido?
+                    <input type="checkbox" id="{{name}}_chkRequired" ng-model="questionx.required" value="1">   Requerido?
                 </label>
             </div>
             </div>

@@ -64,11 +64,11 @@ angular.module('sbAdminApp')
             var pageChange = function (newPage, last_page) {
 
                 var service = $injector.get(scope.servicename);
-                if (newPage == last_page) return;
+                if (newPage == last_page) return;   
                 service.get({
                     page: newPage
                 }, function (response) {
-                    angular.copy(response, scope.allData);
+                    angular.copy(response.rows, scope.allData.rows);
                     scope.allData.current_page = response.current_page;
                 }, function (error) {
                     console.log(error);

@@ -7,8 +7,8 @@
  * Controller of the sbAdminApp
  */
 angular.module('sbAdminApp')
-    .controller('SurveyCtrl', ['$scope','$compile','$state',
-      '$stateParams','Survey','popupService', function($scope,$compile,$state,$stateParams,Survey,popupService) {
+    .controller('SurveyCtrl', ['$scope','$timeout','$compile','$state',
+      '$stateParams','Survey','popupService', function($scope,$timeout,$compile,$state,$stateParams,Survey,popupService) {
           $scope.list_knowledge_areas = [];
           $scope.list_answer_options  = [];
           $scope.selection = [];
@@ -71,10 +71,6 @@ angular.module('sbAdminApp')
           $scope.load_grid = function(){
 
               Survey.get({}, function (response) {
-                /*response().then(function(tt)
-                {
-                  console.log(tt);
-                });*/
                 $scope.surveis     = response.rows;
                 $scope.all_surveis = response;
               }, function (error) {
@@ -107,6 +103,7 @@ angular.module('sbAdminApp')
                   $('#txt_answer').val('');
                   $('#txt_answer').focus();
                   $("#list_answer_options").empty();
+      
                   if($scope.list_answer_options[e.relatedTarget.id]) {
                       for (var i = 0; i < $scope.list_answer_options[e.relatedTarget.id].length; i++) {
                           angular.element(document.getElementById('list_answer_options')).append(
@@ -157,8 +154,16 @@ angular.module('sbAdminApp')
             $scope.survey = new Survey();
           };
 
+          /*$scope.add_survey = function()
+          {
+            $scope.survey.$save(function(){
+                $state.go('dashboard.survey');
+            });
+          }*/
+
           $scope.survey_save = function()
           {
+
             $scope.survey.$save(function(){
               $state.go('dashboard.survey');
             });
@@ -169,12 +174,60 @@ angular.module('sbAdminApp')
              $scope.load_survey();
           };
 
+          $scope.update_survey = function(){
+
+          };
+
           $scope.load_survey=function(){
-            $scope.survey = Survey.get({id:$stateParams.id}, function (response) {
-          }, function (error) {
-              console.log(error);
-              $scope.surveis = [];
-          });
+              $scope.survey = Survey.get({id:$stateParams.id}, function (response) {       
+              $scope.survey.id_course = String(response.id_course);       
+                if(response.kw_areas)
+                {
+                  var len = response.kw_areas.length;
+                  for (var i = 0; i < len; i++) {
+                    var kw = response.kw_areas[i];
+                      $timeout(function(kw){  
+                    $scope.add_knowledge_area(kw['name']);
+
+                    } ,100 ,true,kw); 
+                       var parentName = 'ka_'+kw['name'];
+                       $scope['count_'+parentName] = 0;
+
+                    var len_questions = kw.questions.length;
+                    for (var j = 0; j < len_questions; j++)
+                    {
+                       $timeout(function(parentName,i,j){     
+                          $scope['count_'+parentName]++;
+                          angular.element(document.getElementById('list_'+parentName)).append($compile('<ka-question kw='+i+' quest ='+j+' parent='+parentName+' name='+parentName+'_question'+$scope['count_'+parentName]+'></ka-question>')($scope));
+                          $('#list_'+parentName+' .collapse').removeClass('in');
+                          $('#list_'+parentName).sortable({
+                            handle: ".panel-heading"
+                          });
+
+                       var question_val= kw.questions[j];
+                        var answer_name = parentName+'_question'+$scope['count_'+parentName]+'_btn_add_answer';
+
+                        $timeout(function(question_val,parentName){  
+                          $scope.list_answer_options[answer_name] = [];
+
+                         var len_answers = question_val.opt_answers.length
+                         for (var k = 0; k < len_answers;k++)
+                         {
+                            $scope.list_answer_options[answer_name].push(question_val.opt_answers[k].option);
+
+                         }
+                        } ,400 ,true,question_val,parentName);  
+
+                      } ,200 ,true,parentName,i,j);    
+
+                    }
+
+                  }
+                }
+            }, function (error) {
+                console.log(error);
+                $scope.surveis = [];
+            });
           };
 
 

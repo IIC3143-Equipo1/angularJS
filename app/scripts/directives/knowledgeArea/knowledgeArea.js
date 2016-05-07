@@ -13,9 +13,9 @@ angular.module('sbAdminApp')
             restrict: 'E',
             replace: true,
             scope: {
-                'name': '@',
+                'name': '@'
             },
-            controller:function($scope){
+            controller:function($scope,$compile){
                 $scope['count_ka_'+$scope.name] = 0;
                 $('#list'+$scope.name).collapse();
 
@@ -43,8 +43,6 @@ angular.module('sbAdminApp')
                         }
                     }
                 };
-
-
             }
         }
     }).directive("addKnowledgeArea", function(){
