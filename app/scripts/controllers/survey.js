@@ -151,6 +151,7 @@ angular.module('sbAdminApp')
 
           $scope.survey_new = function()
           {
+            console.log('eee');
             $scope.survey = new Survey();
           };
 
@@ -164,7 +165,15 @@ angular.module('sbAdminApp')
           $scope.survey_save = function()
           {
 
-            $scope.survey.$save(function(){
+           $scope.survey.kw_areas = [];
+           var question = new Object();
+           question['name'] = 'algo';
+           question['answers'] = [];
+           question['answers'].push('uno')
+           $scope.survey.kw_areas.push(question);
+           console.log($scope.survey);
+            $scope.survey.$save(function(response){
+              //console.log(response)
               $state.go('dashboard.survey');
             });
           };
@@ -193,6 +202,8 @@ angular.module('sbAdminApp')
                        var parentName = 'ka_'+kw['name'];
                        $scope['count_'+parentName] = 0;
 
+                    if(ka.questions)
+                    {
                     var len_questions = kw.questions.length;
                     for (var j = 0; j < len_questions; j++)
                     {
@@ -221,7 +232,7 @@ angular.module('sbAdminApp')
                       } ,200 ,true,parentName,i,j);    
 
                     }
-
+                   }
                   }
                 }
             }, function (error) {
