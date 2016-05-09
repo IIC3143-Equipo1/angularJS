@@ -2,7 +2,7 @@
   "development": {
     "username": "jddm11",
     "password": "110889*",
-    "database": "evaluat-e",
+    "database": "evaluat_e",
     "host": "127.0.0.1",
     "port": "5432",
     "dialect": "postgres"

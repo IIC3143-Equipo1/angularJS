@@ -37,7 +37,8 @@ app.use(function (req, res, next) {
     return next();
 });
 
-app.get('/', routes.index);
+// app.get('/', routes.index);
+app.get('/login', routes.login);
 
 app.get(api_prefix + '/survey',        survey.allSurveis);
 app.post(api_prefix + '/survey', 	   survey.createSurvey);
