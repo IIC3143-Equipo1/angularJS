@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:chat
  * @description
- * # adminPosHeader
+ * # evaluateApp.chat
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
 	.directive('chat',function(){
 		return {
         templateUrl:'scripts/directives/chat/chat.html',

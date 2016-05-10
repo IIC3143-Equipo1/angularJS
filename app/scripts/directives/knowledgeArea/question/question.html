@@ -14,13 +14,13 @@
           </a>
     </h4>
       </div>
-    <div id="{{name}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_{{name}}">
+    <div id="{{name}}" data-question={{name}} class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_{{name}}">
         <div class="panel-body">
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="{{name}}_txt_question">Pregunta</label>
             <div class="col-md-6">
-                <input id="{{name}}_txt_question" ng-model="questionx.text" name="{{name}}_txt_question" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="">
+                <input id="{{name}}_txt_question" ng-model="questionx.text" name="text" type="text" placeholder="Digite enunciado de la pregunta" class="form-control input-md" required="" data-question-info="{{name}}_txt_question">
             </div>
         </div>
 
@@ -28,7 +28,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="{{name}}_sel_question_type">Tipo pregunta</label>
             <div class="col-md-6">
-                <select id="{{name}}_sel_question_type" ng-init="questionx.type = questionx.type || '0'" ng-model="questionx.type" name="{{name}}_sel_question_type" class="form-control">
+                <select id="{{name}}_sel_question_type" ng-init="questionx.type = questionx.type || '0'" ng-model="questionx.type" name="type" class="form-control" data-question-info="{{name}}_sel_question_type">
                     <option value="0">Seleccione tipo pregunta</option>
                     <option value="1">Abierta</option>
                     <option value="2">Unica respuesta</option>
@@ -39,14 +39,14 @@
             <div class="form-group" id="{{name}}_answers" ng-show='questionx.type == 2 || questionx.type ==3'>
                 <label class="col-md-4 control-label" for="{{name}}_btn_add_answer"></label>
                 <div class="col-md-6">
-                    <button id="{{name}}_btn_add_answer" data-toggle="modal" data-target="#answer_options_modal" name="{{name}}_btn_add_answer" class="btn btn-primary" formnovalidate>Opciones de respuesta</button>
+                    <button id="{{name}}_btn_add_answer" data-parent="{{name}}" data-toggle="modal" data-target="#answer_options_modal" name="{{name}}_btn_add_answer" class="btn btn-primary" formnovalidate>Opciones de respuesta</button>
                 </div>
             </div>
             <div class="form-group">
             <label class="col-md-4 control-label" for="{{name}}_chkRequired"></label>
             <div class="checkbox col-md-6">
                 <label>
-                    <input type="checkbox" id="{{name}}_chkRequired" ng-model="questionx.required" value="1">   Requerido?
+                    <input type="checkbox" id="{{name}}_chkRequired" data-question-info="{{name}}_chkRequired" ng-model="questionx.required" value="1" name="required">   Requerido?
                 </label>
             </div>
             </div>

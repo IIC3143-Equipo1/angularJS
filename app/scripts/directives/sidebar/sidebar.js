@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:sidebar
  * @description
- * # adminPosHeader
+ * # evaluateApp.sidebar
  */
 
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
   .directive('sidebar',['$location',function() {
     return {
       templateUrl:'scripts/directives/sidebar/sidebar.html',

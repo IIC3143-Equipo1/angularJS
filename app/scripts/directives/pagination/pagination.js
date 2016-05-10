@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:paginate
  * @description
- * # adminPosHeader
+ * # evaluateApp.paginate
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
     .directive('paginate',function($injector){
     return {
         scope: {
@@ -14,7 +14,8 @@ angular.module('sbAdminApp')
             servicename:'@',
             model:'@'
         },
-        template: '<div style="text-align: center"><ul class="pagination" ng-show="totalPages > 1">' +
+        template: 
+        '<div style="text-align: center"><ul class="pagination" ng-show="totalPages > 1">' +
         '  <li><a ng-click="firstPage()">&laquo;</a></li>' +
         '  <li><a ng-click="prevPage()">&lsaquo;</a></li>' +
         '  <li ng-repeat="n in pages">' +
@@ -48,9 +49,11 @@ angular.module('sbAdminApp')
                 scope.current_page = page;
             };
             var paginate = function (results, oldResults) {
+                console.log(results);
                 if (oldResults === results) return;
                 scope.current_page = results.current_page;
                 scope.total = results.count;
+                console.log(scope); 
                 var last_page = scope.total / 5;
                 var last_pages_val = Math.ceil(last_page);
                 scope.totalPages = last_pages_val;
@@ -62,7 +65,7 @@ angular.module('sbAdminApp')
             };
 
             var pageChange = function (newPage, last_page) {
-
+console.log(newPage);
                 var service = $injector.get(scope.servicename);
                 if (newPage == last_page) return;   
                 service.get({

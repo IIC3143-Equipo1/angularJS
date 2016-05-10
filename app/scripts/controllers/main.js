@@ -1,11 +1,11 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name evaluateApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the sbAdminApp
+ * Controller of the evaluateApp
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
   .controller('MainCtrl', function($scope) {
   });

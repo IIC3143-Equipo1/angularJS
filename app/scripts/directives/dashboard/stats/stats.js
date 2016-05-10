@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:adminPosHeader.stats
  * @description
- * # adminPosHeader
+ * # evaluateApp.stats
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
     .directive('stats',function() {
     	return {
   		templateUrl:'scripts/directives/dashboard/stats/stats.html',

@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:timeline
  * @description
- * # adminPosHeader
+ * # evaluateApp.timeline
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
 	.directive('timeline',function() {
     return {
         templateUrl:'scripts/directives/timeline/timeline.html',

@@ -6,18 +6,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <a role="button" data-toggle="collapse" data-parent="#list_kw_areas" href="javascript:;" data-target="#ka_{{name}}" aria-expanded="true" aria-controls="list_ka_{{name}}">
+            <a role="button" data-toggle="collapse" data-parent="#list_kw_areas" href="javascript:;" data-target="#ka_{{name}}" aria-expanded="true" aria-controls="list_ka_{{name}}" class="text-capitalize">
                 <!--<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>-->Area conocimiento {{name}}
             </a>
         </h4>
     </div>
-    <div id="ka_{{name}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_ka_{{name}}">
+    <div id="ka_{{name}}" class="panel-collapse collapse in" data-kw="ka_{{name}}" role="tabpanel" aria-labelledby="heading_ka_{{name}}">
         <div class="panel-body">
     <!-- Button -->
     <div class="form-group">
         <label class="col-md-4 control-label" for="btn_add_question"></label>
         <div class="col-md-6">
-            <button id="btn_add_question_{{name" name="btn_add_question" class="btn btn-primary"  add-question parent-name="ka_{{name}}" formnovalidate>Agregar pregunta</button>
+            <button id="btn_add_question_{{name}}" name="btn_add_question" class="btn btn-primary"  add-question parent-name="ka_{{name}}" formnovalidate>Agregar pregunta</button>
         </div>
     </div>
     <div class="panel-group" id="list_ka_{{name}}" role="tablist" aria-multiselectable="true">

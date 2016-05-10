@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:kaAnswer
  * @description
- * # adminPosHeader
+ * # evaluateApp.kaAnswer
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
     .directive('kaAnswer',function(){
         return {
             templateUrl:'scripts/directives/knowledgeArea/answer/answer.html',
@@ -20,9 +20,9 @@ angular.module('sbAdminApp')
                     var preAnswer = event.currentTarget.parentNode.parentNode.innerText;
                     var answer = preAnswer.substr(2);
                     console.log($scope.$parent);
-                    $scope.$parent.list_answer_options[$scope.$parent.currentAnswer] =$.grep($scope.$parent.list_answer_options[$scope.$parent.current_answer],
+                    $scope.$parent.list_answer_options[$scope.$parent.current_answer] =$.grep($scope.$parent.list_answer_options[$scope.$parent.current_answer],
                         function(value) {
-                            return value != answer.toLowerCase();
+                            return value != answer;
                         });
                     event.currentTarget.parentNode.parentNode.remove();
 

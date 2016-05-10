@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:adminPosHeader.header
  * @description
- * # adminPosHeader
+ * # evaluateApp.header
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
 	.directive('header',function(){
 		return {
         templateUrl:'scripts/directives/header/header.html',

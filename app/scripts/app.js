@@ -1,14 +1,14 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name sbAdminApp
+ * @name evaluateApp
  * @description
- * # sbAdminApp
+ * # evaluateApp
  *
  * Main module of the application.
  */
 angular
-  .module('sbAdminApp', [
+  .module('evaluateApp', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
@@ -23,7 +23,7 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/dashboard/home');
+    $urlRouterProvider.otherwise('/login');
 
     $stateProvider
       .state('dashboard', {
@@ -33,7 +33,7 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
-                    name:'sbAdminApp',
+                    name:'evaluateApp',
                     files:[
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
@@ -83,7 +83,7 @@ angular
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'sbAdminApp',
+              name:'evaluateApp',
               files:[
               'scripts/controllers/main.js',
               'scripts/directives/timeline/timeline.js',
@@ -107,7 +107,7 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
-                        name:'sbAdminApp',
+                        name:'evaluateApp',
                         files:[
                             'scripts/services/survey.js',
                             'scripts/controllers/survey.js',
@@ -123,7 +123,7 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
-                        name:'sbAdminApp',
+                        name:'evaluateApp',
                         files:[
                             'scripts/services/survey.js',
                             'scripts/controllers/survey.js',
@@ -141,7 +141,7 @@ angular
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
-                        name:'sbAdminApp',
+                        name:'evaluateApp',
                         files:[
                             'scripts/services/survey.js',
                             'scripts/controllers/survey.js',
@@ -173,7 +173,7 @@ angular
               ]
             }),
             $ocLazyLoad.load({
-                name:'sbAdminApp',
+                name:'evaluateApp',
                 files:['scripts/controllers/chartContoller.js']
             })
           }

@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name izzyposWebApp.directive:adminPosHeader
+ * @name evaluateApp.directive:kaQuestion
  * @description
- * # adminPosHeader
+ * # evaluateApp.kaQuestion
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
     .directive('kaQuestion',function(){
         return {
             templateUrl:'scripts/directives/knowledgeArea/question/question.html',
@@ -21,18 +21,23 @@ angular.module('sbAdminApp')
             controller:function($scope){
                 if($scope.$parent.survey)
                 {
-                    $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
-                    $scope.questionx.type = String($scope.questionx.type);
-                    $scope.questionx.required = Boolean($scope.questionx.required);
+                    if($scope.kw && $scope.quest)
+                    {
+                        $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
+                        $scope.questionx.type = String($scope.questionx.type);
+                        $scope.questionx.required = Boolean($scope.questionx.required);
+                    }
                 }
                 $scope.delete_question = function(name,parent) {
+                    //console.log(name);
+                    //console.log($scope.$parent);
                     $('#'+name).parent().remove();
                     //$scope.$parent['count-'+parent]--;
-                    $scope.$parent.$parent.list_answer_options[name] = [];
+                    $scope.$parent.list_answer_options[name] = [];
                 };
 
                 $scope.is_not_open_question = function (name) {
-                    var value = $('#'+name+'-sel_question_type').val();
+                    var value = $('#'+name+'_sel_question_type').val();
                     if(value == 1 || value == 2)
                     {
                         return true;
@@ -47,10 +52,11 @@ angular.module('sbAdminApp')
     }).directive("addQuestion", function($compile){
         return function(scope, element, attrs){
             element.bind("click", function(){
-                scope['count_'+attrs.parentName]++;
-                angular.element(document.getElementById('list_'+attrs.parentName)).append($compile('<ka-question parent='+attrs.parentName+' name='+attrs.parentName+'_question'+scope['count_'+attrs.parentName]+'></ka-question>')(scope));
-                $('#list_'+attrs.parentName+' .collapse').removeClass('in');
-                $('#list_'+attrs.parentName).sortable({
+                var parentName = attrs.parentName;
+                scope.$parent['count_'+parentName]++;
+                angular.element(document.getElementById('list_'+parentName)).append($compile('<ka-question parent='+parentName+' name='+parentName+'_question'+scope.$parent['count_'+parentName]+'></ka-question>')(scope.$parent));
+                $('#list_'+parentName+' .collapse').removeClass('in');
+                $('#list_'+parentName).sortable({
                     handle: ".panel-heading"
                 });
             });

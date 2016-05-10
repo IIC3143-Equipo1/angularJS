@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name evaluateApp.controller:SurveyCtrl
  * @description
- * # MainCtrl
- * Controller of the sbAdminApp
+ * # SurveyCtrl
+ * Controller of the evaluateApp
  */
-angular.module('sbAdminApp')
+angular.module('evaluateApp')
     .controller('SurveyCtrl', ['$scope','$timeout','$compile','$state',
       '$stateParams','Survey','popupService', function($scope,$timeout,$compile,$state,$stateParams,Survey,popupService) {
           $scope.list_knowledge_areas = [];
@@ -25,13 +25,15 @@ angular.module('sbAdminApp')
 
           $scope.add_knowledge_area = function(name){
               if(name != '') {
-                  if ($.inArray(name.toLowerCase(), $scope.list_knowledge_areas) == -1) {
+                  if ($.inArray(name, $scope.list_knowledge_areas) == -1) {
                       angular.element(document.getElementById('list_kw_areas')).append($compile('<knowledge-area name=' + name + '></knowledge-area>')($scope));
                       $('#list_kw_areas .collapse').removeClass('in');
                       $('#list_kw_areas').sortable({
                           handle: ".panel-heading"
                       });
-                      $scope.list_knowledge_areas.push(name.toLowerCase());
+                      $scope.list_knowledge_areas.push(name);
+                      $('#txt_knowledge_area').val('');
+                      $('#txt_knowledge_area').focus();
                   } else {
                       $scope.show_alert('Area de conocimiento ya ha sido agregada.');
                       //alert('Area de conocimiento ya ha sido agregada.');
@@ -46,7 +48,7 @@ angular.module('sbAdminApp')
           $scope.add_answer_option = function(){
             var name = $("#txt_answer").val();
             if(name != '') {
-                if ($.inArray(name, $scope.list_answer_options[$scope.currentAnswer]) == -1) {
+                if ($.inArray(name, $scope.list_answer_options[$scope.current_answer]) == -1) {
                     angular.element(document.getElementById('list_answer_options')).append(
                         $compile('<ka-answer name="' + name + '"></ka-answer>')($scope)
                     );
@@ -95,7 +97,7 @@ angular.module('sbAdminApp')
               $( "#txt_knowledge_area" ).autocomplete({
                   source: knowledge_areas,
                   select: function( event, ui ) {
-                      $scope.add_knowledge_area(ui.item.value);
+                      $scope.add_knowledge_area(ui.item.value.toLowerCase());
                   }
               });
 
@@ -104,34 +106,37 @@ angular.module('sbAdminApp')
                   $('#txt_answer').focus();
                   $("#list_answer_options").empty();
       
-                  if($scope.list_answer_options[e.relatedTarget.id]) {
-                      for (var i = 0; i < $scope.list_answer_options[e.relatedTarget.id].length; i++) {
+                  if($scope.list_answer_options[e.relatedTarget.attributes['data-parent'].value]) {
+                      for (var i = 0; i < $scope.list_answer_options[e.relatedTarget.attributes['data-parent'].value].length; i++) {
                           angular.element(document.getElementById('list_answer_options')).append(
-                              $compile('<ka-answer name="' + $scope.list_answer_options[e.relatedTarget.id][i] + '"></ka-answer>')($scope)
+                              $compile('<ka-answer name="' + $scope.list_answer_options[e.relatedTarget.attributes['data-parent'].value][i] + '"></ka-answer>')($scope)
                           );
                       }
                   }else
                   {
-                      $scope.list_answer_options[e.relatedTarget.id] = [];
+                      $scope.list_answer_options[e.relatedTarget.attributes['data-parent'].value] = [];//[e.relatedTarget.id] = [];
                   }
-                  $scope.current_answer = e.relatedTarget.id;
+                  $scope.current_answer = e.relatedTarget.attributes['data-parent'].value;//.relatedTarget.id;
               });
 
           };  
 
 
           $scope.delete_surveis=function(){
-            if(popupService.showPopup('Estás seguro?')){
+            if(popupService.showPopup('Esta seguro de eliminar la información?')){
+              console.log($scope.selection);
                 $scope.selection.forEach(function(obj,key){
                     var response = Survey.delete({id:key});
                 });
-                $scope.init();
+                $timeout(function(){  
+                  $state.reload();
+                      },1000); 
                 $scope.selection = [];
             }
           };
 
           $scope.delete_survey=function(survey){
-              if(popupService.showPopup('Estás seguro?')){
+              if(popupService.showPopup('Esta seguro de eliminar la encuesta?')){
                   var response = Survey.delete({id:survey.id});
                   //growl.success("Borrado correctamente", {ttl: 3000,disableCountDown: true});
                   $scope.init();
@@ -151,7 +156,6 @@ angular.module('sbAdminApp')
 
           $scope.survey_new = function()
           {
-            console.log('eee');
             $scope.survey = new Survey();
           };
 
@@ -162,20 +166,53 @@ angular.module('sbAdminApp')
             });
           }*/
 
+          $scope.prepare_data = function(){
+
+            $scope.survey.kw_areas = [];
+            if($scope.list_knowledge_areas)
+              {
+              var kw_len = $scope.list_knowledge_areas.length
+              for(var i = 0; i < kw_len; i ++)
+              {
+                var kw_save = new Object();
+                kw_save['name'] = $scope.list_knowledge_areas[i];
+                var aux_kw = $("div[data-kw='ka_"+$scope.list_knowledge_areas[i]+"'] div[data-question]");
+                kw_save['questions'] = [];
+                $.each( aux_kw, function( key, value ) {
+                  console.log(value);
+                  var question_save = new Object();
+                  var question_id = value.attributes['data-question'].value;
+                  var aux_question = $("div[data-question='"+question_id+"'] [data-question-info]");
+                  question_save['position'] = key;
+                  $.each( aux_question, function( key, valueAux ) {
+                      question_save[valueAux.name] = valueAux.value; 
+                  });
+                  if(value.id in $scope.list_answer_options)
+                  {
+                    var answers_len = $scope.list_answer_options[value.id].length;
+                    question_save['opt_answers'] = [];
+                    for(var j = 0; j < answers_len; j++)
+                    {
+                       var answer_save = new Object();
+                       answer_save['option'] = $scope.list_answer_options[value.id][j]  ;
+                       question_save['opt_answers'].push(answer_save);
+                    }
+                  }
+                   kw_save['questions'].push(question_save);
+                });
+                $scope.survey.kw_areas.push(kw_save);
+              }
+            }
+
+          }
+
+
           $scope.survey_save = function()
           {
-
-           $scope.survey.kw_areas = [];
-           var question = new Object();
-           question['name'] = 'algo';
-           question['answers'] = [];
-           question['answers'].push('uno')
-           $scope.survey.kw_areas.push(question);
-           console.log($scope.survey);
+            $scope.prepare_data();
             $scope.survey.$save(function(response){
-              //console.log(response)
               $state.go('dashboard.survey');
-            });
+            }); 
           };
 
           $scope.survey_edit = function()
@@ -184,11 +221,18 @@ angular.module('sbAdminApp')
           };
 
           $scope.update_survey = function(){
-
+            $scope.prepare_data();
+            $scope.survey.$update({id:$stateParams.id},function(response){
+              $state.go('dashboard.survey');
+            }, function (error) {
+                console.log(error);
+                //$scope.surveis = [];
+            }); 
           };
 
           $scope.load_survey=function(){
-              $scope.survey = Survey.get({id:$stateParams.id}, function (response) {       
+              $scope.survey = Survey.get({id:$stateParams.id}, function (response) {    
+
               $scope.survey.id_course = String(response.id_course);       
                 if(response.kw_areas)
                 {
@@ -196,13 +240,11 @@ angular.module('sbAdminApp')
                   for (var i = 0; i < len; i++) {
                     var kw = response.kw_areas[i];
                       $timeout(function(kw){  
-                    $scope.add_knowledge_area(kw['name']);
-
-                    } ,100 ,true,kw); 
+                        $scope.add_knowledge_area(kw['name']);
+                      },100 ,true,kw); 
                        var parentName = 'ka_'+kw['name'];
                        $scope['count_'+parentName] = 0;
-
-                    if(ka.questions)
+                    if(kw.questions)
                     {
                     var len_questions = kw.questions.length;
                     for (var j = 0; j < len_questions; j++)
@@ -216,16 +258,17 @@ angular.module('sbAdminApp')
                           });
 
                        var question_val= kw.questions[j];
-                        var answer_name = parentName+'_question'+$scope['count_'+parentName]+'_btn_add_answer';
+                        var answer_name = parentName+'_question'+$scope['count_'+parentName];
 
                         $timeout(function(question_val,parentName){  
                           $scope.list_answer_options[answer_name] = [];
-
-                         var len_answers = question_val.opt_answers.length
-                         for (var k = 0; k < len_answers;k++)
+                        if(question_val && question_val.opt_answers)
                          {
-                            $scope.list_answer_options[answer_name].push(question_val.opt_answers[k].option);
-
+                           var len_answers = question_val.opt_answers.length
+                           for (var k = 0; k < len_answers;k++)
+                           {
+                              $scope.list_answer_options[answer_name].push(question_val.opt_answers[k].option);
+                           }
                          }
                         } ,400 ,true,question_val,parentName);  
 
