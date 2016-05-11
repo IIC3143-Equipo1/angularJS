@@ -327,7 +327,6 @@ angular.module('evaluateApp')
                     'Content-Type': 'application/json;'
                 }
             }
-            //http://localhost:5001
             $http.post('https://evaluat-e-api.herokuapp.com/api/send_message', data, config)
             .success(function (data, status, headers, config) {
                 alert('Enviado correctamente');
