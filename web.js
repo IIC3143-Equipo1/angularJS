@@ -7,7 +7,7 @@ var methodOverride = require('method-override');
 var app = express();
 
 app.set('port', process.env.PORT || 5000);
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'app')));
 
 // development only
 if ('development' == app.get('env')) {
