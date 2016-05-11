@@ -1,0 +1,40 @@
+<div class="col-xs-8 col-sm-9 col-md-9" ng-init="load_grid()">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <td></td>
+                <td style="text-align:center"><h4>#</h4></td>
+                <td><h4>Nombre</h4></td>
+                <td><h4>Email</h4></td>
+                <td>    
+                    <div class="dropdown">
+                      <button class="btn btn-danger dropdown-toggle" type="button" id="dropdown_actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Acciones
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdown_actions">
+                         <li><a tabindex="-1" ng-click="send_surveis()"  href="javascript:;">Enviar</a></li>
+                      </ul>
+                    </div>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="student in students">
+                <td><input ng-model="selection_students[student.id]" type="checkbox"></td>
+                <td style="text-align:center">{{sno_students($index)}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.email}}</td>
+                <td>
+                    <a class="btn btn-success" data-toggle="modal" ng-click="send_survey(student)">Enviar</a>
+                </td>
+            </tbody>
+            </tr>
+            <tr ng-show="students.length == 0">
+                <td colspan="4" style="text-align:center">No Records Found..!</td>
+            </tr>
+        </table>
+       <!--<paginate servicename="Student" model="students" src="all_students"></paginate>-->
+    </div>
+</div>

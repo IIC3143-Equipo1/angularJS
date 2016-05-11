@@ -184,16 +184,38 @@ angular
         url:'/table'
     })
       .state('dashboard.panels-wells',{
-          templateUrl:'views/ui-elements/panels-wells.html',
-          url:'/panels-wells'
+          templateUrl:'views/ui-elements/temp_01.html',
+          url:'/authorization'
       })
       .state('dashboard.buttons',{
-        templateUrl:'views/ui-elements/buttons.html',
-        url:'/buttons'
+        templateUrl:'views/course/course.html',
+        controller:'CourseCtrl',
+        url:'/course',
+           resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'evaluateApp',
+              files:[
+              'scripts/controllers/course.js',
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.notifications',{
-        templateUrl:'views/ui-elements/notifications.html',
-        url:'/notifications'
+        templateUrl:'views/student/student.html',
+        controller:'StudentCtrl',
+        url:'/student',
+           resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'evaluateApp',
+              files:[
+              'scripts/controllers/student.js',
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.typography',{
        templateUrl:'views/ui-elements/typography.html',

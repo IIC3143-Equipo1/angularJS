@@ -25,8 +25,9 @@
                 <div class="input-group">
                 <select id="sel_course" ng-model="survey.id_course" name="sel_course" class="form-control">
                     <option value="0">Seleccione curso</option>
-                    <option value="1">A1</option>
-                    <option value="2">B1</option>
+                    <option value="1">C400</option>
+                    <option value="2">C500</option>
+                    <option value="3">C600</option>
                 </select>
                 <span class="input-group-btn">
                       <button class="btn btn-default" type="button" data-toggle="modal" data-target="#course_modal">Agregar</button>
@@ -61,14 +62,43 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Crear curso</h4>
+                <h4 class="modal-title">Cursos</h4>
             </div>
             <div class="modal-body">
-                ...
+
+
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <td style="text-align:center"><h4>#</h4></td>
+                <td><h4>Nombre</h4></td>
+                <td><h4>Código</h4></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="course in courses">
+                <td style="text-align:center">{{sno_courses($index)}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.code}}</td>
+                <td>
+                                       <a class="btn btn-primary" data-toggle="tooltip" title="Seleccionar" aria-label="Seleccionar" data-placement="top" ui-sref="dashboard.survey_edit({id:course.id})">  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                </td>
+            </tbody>
+            </tr>
+            <tr ng-show="courses.length == 0">
+                <td colspan="4" style="text-align:center">No Records Found..!</td>
+            </tr>
+        </table>
+       <!--<paginate servicename="Student" model="students" src="all_students"></paginate>-->
+    </div>
+
+
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

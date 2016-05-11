@@ -53,6 +53,10 @@ angular.module('evaluateApp')
         return function(scope, element, attrs){
             element.bind("click", function(){
                 var parentName = attrs.parentName;
+                if(!scope.$parent['count_'+parentName])
+                {
+                    scope.$parent['count_'+parentName] = 0;
+                }
                 scope.$parent['count_'+parentName]++;
                 angular.element(document.getElementById('list_'+parentName)).append($compile('<ka-question parent='+parentName+' name='+parentName+'_question'+scope.$parent['count_'+parentName]+'></ka-question>')(scope.$parent));
                 $('#list_'+parentName+' .collapse').removeClass('in');

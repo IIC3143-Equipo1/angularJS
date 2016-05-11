@@ -8,11 +8,23 @@
  */
 angular.module('evaluateApp')
     .controller('SurveyCtrl', ['$scope','$timeout','$compile','$state',
-      '$stateParams','Survey','popupService', function($scope,$timeout,$compile,$state,$stateParams,Survey,popupService) {
+      '$stateParams','Survey','popupService','$http', function($scope,$timeout,$compile,$state,$stateParams,Survey,popupService,$http) {
           $scope.list_knowledge_areas = [];
           $scope.list_answer_options  = [];
           $scope.selection = [];
+          $scope.selection_students = [];
           $scope.current_answer;
+
+
+ $scope.selection_courses = [];
+
+      $scope.courses = [{id:1,name:'Cuarto elemental',code:'c400'},{id:2,name:'Quinto elemental',code:'c500'},{id:3,name:'Sexto elemental',code:'c600'}]; //Student.get({id:id});
+
+       $scope.sno_courses = function (index) {
+              var from = 5 * (0) + 1;
+              return from + index;
+          };
+
 
           $scope.show_alert = function(message) {
               $('#alert').html("<div class='alert alert-danger'>" +
@@ -43,6 +55,7 @@ angular.module('evaluateApp')
                   $scope.show_alert('Debe seleccionar o digitar un area de conocimiento.');
                   //alert('Debe seleccionar o digitar un area de conocimiento.')
               }
+              return true;
           };
 
           $scope.add_answer_option = function(){
@@ -68,11 +81,17 @@ angular.module('evaluateApp')
           $scope.sno = function (index) {
               var from = 5 * ($scope.all_surveis.current_page - 1) + 1;
               return from + index;
-          }
+          };
+
+            $scope.sno_students = function (index) {
+              var from = 5 * (0) + 1;
+              return from + index;
+          };
 
           $scope.load_grid = function(){
 
               Survey.get({}, function (response) {
+                console.log(response);
                 $scope.surveis     = response.rows;
                 $scope.all_surveis = response;
               }, function (error) {
@@ -139,7 +158,8 @@ angular.module('evaluateApp')
               if(popupService.showPopup('Esta seguro de eliminar la encuesta?')){
                   var response = Survey.delete({id:survey.id});
                   //growl.success("Borrado correctamente", {ttl: 3000,disableCountDown: true});
-                  $scope.init();
+                  $state.reload();
+                  //$scope.init();
               }
           };
 
@@ -283,6 +303,43 @@ angular.module('evaluateApp')
                 $scope.surveis = [];
             });
           };
+
+
+          $scope.open_students = function(survey){
+
+
+               $scope.students = [{id:1,name:'Juan Diaz',email:'jddiaz4@uc.cl'},{id:2,name:'Pablo',email:'pmessina@uc.cl'},{id:3,name:'Nicolas Cerda',email:'ncerda@uc.cl'}]; //Student.get({id:id});
+
+
+          };
+
+          $scope.send_survey = function(student){
+
+
+            // use $.param jQuery function to serialize data from JSON 
+            var data = $.param({
+                name: student.name,
+                email: student.email
+            });
+        
+            var config = {
+                headers : {
+                    'Content-Type': 'application/json;'
+                }
+            }
+            //http://localhost:5001
+            $http.post('https://evaluat-e-api.herokuapp.com/api/send_message', data, config)
+            .success(function (data, status, headers, config) {
+                alert('Enviado correctamente');
+            })
+            .error(function (data, status, header, config) {
+console.log(data);
+            });
+
+
+
+          }
+
 
 
 
