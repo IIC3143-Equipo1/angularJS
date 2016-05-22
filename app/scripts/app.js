@@ -94,12 +94,12 @@ angular
             })
           }
         }
-      })
+    })
       .state('dashboard.form',{
         templateUrl:'views/form.html',
         url:'/form'
     })
-    .state('dashboard.survey',{
+      .state('dashboard.survey',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey.html',
         url:'/survey',
@@ -111,11 +111,13 @@ angular
                         files:[
                             'scripts/services/survey.js',
                             'scripts/controllers/survey.js',
-                            'scripts/directives/pagination/pagination.js'
+                            'scripts/directives/pagination/pagination.js',
+                            'scripts/services/general.js',
+                            'scripts/services/student.js'
                         ]
                     })}
     }})
-    .state('dashboard.survey_new',{
+      .state('dashboard.survey_new',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey-add.html',
         url:'/survey/new',
@@ -129,11 +131,12 @@ angular
                             'scripts/controllers/survey.js',
                             'scripts/directives/knowledgeArea/knowledgeArea.js',
                             'scripts/directives/knowledgeArea/question/question.js',
-                            'scripts/directives/knowledgeArea/answer/answer.js'
+                            'scripts/directives/knowledgeArea/answer/answer.js',
+                            'scripts/services/general.js'
                         ]
                     })}
     }})
-    .state('dashboard.survey_edit',{
+      .state('dashboard.survey_edit',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey-edit.html',
         url:'/survey/:id/edit',
@@ -147,17 +150,18 @@ angular
                             'scripts/controllers/survey.js',
                             'scripts/directives/knowledgeArea/knowledgeArea.js',
                             'scripts/directives/knowledgeArea/question/question.js',
-                            'scripts/directives/knowledgeArea/answer/answer.js'
+                            'scripts/directives/knowledgeArea/answer/answer.js',
+                            'scripts/services/general.js'
                         ]
                     })}
     }})
-      .state('dashboard.blank',{
-        templateUrl:'views/pages/blank.html',
-        url:'/blank'
-    })
       .state('login',{
-        templateUrl:'views/pages/login.html',
+        templateUrl:'views/dashboard/login.html',
         url:'/login'
+    })
+      .state('dashboard.auth',{
+        templateUrl:'views/dashboard/auth.html',
+        url:'/auth'
     })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
@@ -174,20 +178,12 @@ angular
             }),
             $ocLazyLoad.load({
                 name:'evaluateApp',
-                files:['scripts/controllers/chartContoller.js']
+                files:['scripts/controllers/chart.js']
             })
           }
         }
     })
-      .state('dashboard.table',{
-        templateUrl:'views/table.html',
-        url:'/table'
-    })
-      .state('dashboard.panels-wells',{
-          templateUrl:'views/ui-elements/temp_01.html',
-          url:'/authorization'
-      })
-      .state('dashboard.buttons',{
+      .state('dashboard.course',{
         templateUrl:'views/course/course.html',
         controller:'CourseCtrl',
         url:'/course',
@@ -197,12 +193,47 @@ angular
               name:'evaluateApp',
               files:[
               'scripts/controllers/course.js',
+              'scripts/services/course.js',
+              'scripts/directives/pagination/pagination.js',
+              'scripts/services/general.js'
               ]
             })
           }
         }
     })
-      .state('dashboard.notifications',{
+      .state('dashboard.course_new',{
+        controller: 'CourseCtrl',
+        templateUrl:'views/course/course-add.html',
+        url:'/course/new',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/course.js',
+                            'scripts/controllers/course.js',
+                            'scripts/services/general.js'
+                        ]
+                    })}
+    }})
+      .state('dashboard.course_edit',{
+        controller: 'CourseCtrl',
+        templateUrl:'views/course/course-edit.html',
+        url:'/course/:id/edit',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/course.js',
+                            'scripts/controllers/course.js',
+                            'scripts/services/general.js'
+                        ]
+                    })}
+    }})
+      .state('dashboard.student',{
         templateUrl:'views/student/student.html',
         controller:'StudentCtrl',
         url:'/student',
@@ -212,26 +243,50 @@ angular
               name:'evaluateApp',
               files:[
               'scripts/controllers/student.js',
+              'scripts/services/student.js',
+              'scripts/services/general.js',
+              'scripts/directives/pagination/pagination.js'
               ]
             })
           }
         }
-    })
-      .state('dashboard.typography',{
-       templateUrl:'views/ui-elements/typography.html',
-       url:'/typography'
-   })
-      .state('dashboard.icons',{
-       templateUrl:'views/ui-elements/icons.html',
-       url:'/icons'
-   })
-      .state('dashboard.grid',{
-       templateUrl:'views/ui-elements/grid.html',
-       url:'/grid'
-   })
-  }]);
+    })   
+      .state('dashboard.student_new',{
+        controller: 'StudentCtrl',
+        templateUrl:'views/student/student-add.html',
+        url:'/student/new',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/student.js',
+                            'scripts/controllers/student.js',
+                            'scripts/services/general.js'
+                        ]
+                    })}
+    }})
+      .state('dashboard.student_edit',{
+        controller: 'StudentCtrl',
+        templateUrl:'views/student/student-edit.html',
+        url:'/student/:id/edit',
+        resolve: {
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/student.js',
+                            'scripts/controllers/student.js',
+                            'scripts/services/general.js'
+                        ]
+                    })}
+    }})
+  }]).value('url_api', 'https://evaluat-e-api.herokuapp.com/');;
 
-/*.run(function($state,$rootScope) {
+    /*
+    .run(function($state,$rootScope) {
 
         $state.go('dashboard.home');
 

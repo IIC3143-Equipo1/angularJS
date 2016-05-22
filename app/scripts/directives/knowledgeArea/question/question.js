@@ -24,15 +24,11 @@ angular.module('evaluateApp')
                     if($scope.kw && $scope.quest)
                     {
                         $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
-                        $scope.questionx.type = String($scope.questionx.type);
                         $scope.questionx.required = Boolean($scope.questionx.required);
                     }
                 }
                 $scope.delete_question = function(name,parent) {
-                    //console.log(name);
-                    //console.log($scope.$parent);
                     $('#'+name).parent().remove();
-                    //$scope.$parent['count-'+parent]--;
                     $scope.$parent.list_answer_options[name] = [];
                 };
 

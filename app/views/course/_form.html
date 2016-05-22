@@ -1,0 +1,34 @@
+<div ng-init="init()">
+<div id="alert" class="notification-msg"></div>
+
+<form class="form-horizontal">
+    <fieldset>
+        <!-- Form Name -->
+        <legend><div class="container-fluid">
+        <a href="#/dashboard/course" class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
+            <button type="button" ng-click="course_save()" class="btn btn-default navbar-btn navbar-right" formnovalidate>Guardar</button>
+        </div>
+        </legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_name">Nombre</label>
+            <div class="col-md-6">
+                <input id="txt_name" name="txt_name" ng-model="course.name" type="text" placeholder="Escriba nombre del curso" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_code">Código</label>
+            <div class="col-md-6">
+                <input id="txt_code" name="txt_code" ng-model="course.code" type="text" placeholder="Escriba código del curso" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+</div>
+

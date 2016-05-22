@@ -12,6 +12,8 @@ angular.module('evaluateApp')
         scope: {
             allData: '=src',
             servicename:'@',
+            type:'=?',
+            identity:'=?',
             model:'@'
         },
         template: 
@@ -49,11 +51,9 @@ angular.module('evaluateApp')
                 scope.current_page = page;
             };
             var paginate = function (results, oldResults) {
-                console.log(results);
                 if (oldResults === results) return;
                 scope.current_page = results.current_page;
                 scope.total = results.count;
-                console.log(scope); 
                 var last_page = scope.total / 5;
                 var last_pages_val = Math.ceil(last_page);
                 scope.totalPages = last_pages_val;
@@ -65,18 +65,36 @@ angular.module('evaluateApp')
             };
 
             var pageChange = function (newPage, last_page) {
-console.log(newPage);
                 var service = $injector.get(scope.servicename);
-                if (newPage == last_page) return;   
-                service.get({
-                    page: newPage
-                }, function (response) {
-                    angular.copy(response.rows, scope.allData.rows);
-                    scope.allData.current_page = response.current_page;
-                }, function (error) {
-                    console.log(error);
-                    scope.allData = [];
-                });
+                if (newPage == last_page) return;  
+                var type = angular.isDefined(scope.type) ? scope.type : 0;
+                if(type)
+                {
+                    var result = service.http.getStudentsByCourse(scope.identity,newPage);
+                    result.then(function (response) {
+                        angular.copy(response.data.rows, scope.allData.rows);
+                        scope.allData.current_page = response.data.current_page;
+                    }, function (error) {
+                        console.log(error);
+                        scope.allData = [];
+                    });
+                }else
+                {
+                    var new_service = service;
+                    if(scope.servicename == 'Student')
+                    {
+                        new_service = service.resource;
+                    }
+                    new_service.get({
+                        page: newPage
+                    }, function (response) {
+                        angular.copy(response.rows, scope.allData.rows);
+                        scope.allData.current_page = response.current_page;
+                    }, function (error) {
+                        console.log(error);
+                        scope.allData = [];
+                    });
+                }
 
             };
 

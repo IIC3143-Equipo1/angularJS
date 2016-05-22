@@ -1,0 +1,43 @@
+<div ng-init="init()">
+<div id="alert" class="notification-msg"></div>
+
+<form class="form-horizontal">
+    <fieldset>
+        <!-- Form Name -->
+        <legend><div class="container-fluid">
+        <a href="#/dashboard/student" class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
+            <button type="button" ng-click="student_save()" class="btn btn-default navbar-btn navbar-right" formnovalidate>Guardar</button>
+        </div>
+        </legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_name">Nombre</label>
+            <div class="col-md-6">
+                <input id="txt_name" name="txt_name" ng-model="student.name" type="text" placeholder="Escriba nombre del estudiante" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_code">Código</label>
+            <div class="col-md-6">
+                <input id="txt_code" name="txt_code" ng-model="student.code" type="text" placeholder="Escriba código del estudiante" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_email">Email</label>
+            <div class="col-md-6">
+                <input id="txt_email" name="txt_email" ng-model="student.email" type="text" placeholder="Escriba email del estudiante" class="form-control input-md" required="required">
+
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+</div>
+
