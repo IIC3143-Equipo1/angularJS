@@ -15,6 +15,7 @@ angular
     'angular-loading-bar',
     'ngResource',
     'ngCookies',
+    'smart-table'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
 
@@ -244,6 +245,7 @@ angular
               files:[
               'scripts/controllers/student.js',
               'scripts/services/student.js',
+              'scripts/services/course.js',
               'scripts/services/general.js',
               'scripts/directives/pagination/pagination.js'
               ]
@@ -263,6 +265,7 @@ angular
                         files:[
                             'scripts/services/student.js',
                             'scripts/controllers/student.js',
+                            'scripts/services/course.js',
                             'scripts/services/general.js'
                         ]
                     })}
@@ -279,12 +282,14 @@ angular
                         files:[
                             'scripts/services/student.js',
                             'scripts/controllers/student.js',
+                            'scripts/services/course.js',
                             'scripts/services/general.js'
                         ]
                     })}
     }})
-  }]).value('url_api', 'https://evaluat-e-api.herokuapp.com/');;
-
+  }]).value('url_api', 'https://evaluat-e-api.herokuapp.com/');
+    //http://localhost:5001
+    //
     /*
     .run(function($state,$rootScope) {
 

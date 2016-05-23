@@ -1,43 +1,124 @@
 <div ng-init="init()">
 <div id="alert" class="notification-msg"></div>
 
-<form class="form-horizontal">
-    <fieldset>
-        <!-- Form Name -->
-        <legend><div class="container-fluid">
-        <a href="#/dashboard/student" class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
-            <button type="button" ng-click="student_save()" class="btn btn-default navbar-btn navbar-right" formnovalidate>Guardar</button>
-        </div>
-        </legend>
 
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_name">Nombre</label>
-            <div class="col-md-6">
-                <input id="txt_name" name="txt_name" ng-model="student.name" type="text" placeholder="Escriba nombre del estudiante" class="form-control input-md" required="required">
+ <!-- Nav tabs -->
+  <ul class="nav nav-tabs nav-justified" role="tablist">
+    <li role="presentation" class="active"><a data-target="#tab_student" href="javascript:;" aria-controls="tab_student" role="tab" data-toggle="tab">Estudiantes</a></li>
+    <li role="presentation"><a data-target="#tab_courses" href="javascript:;" id="courses_tab_link" aria-controls="tab_courses" role="tab">Cursos</a></li>
+  </ul>
 
+<!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="tab_student">
+        <form class="form-horizontal">
+        <fieldset>
+            <!-- Form Name -->
+            <legend><div class="container-fluid">
+            <a href="#/dashboard/student" class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
+                <button type="button" ng-click="student_save()" class="btn btn-default navbar-btn navbar-right" formnovalidate>Guardar</button>
             </div>
-        </div>
+            </legend>
 
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_code">Código</label>
-            <div class="col-md-6">
-                <input id="txt_code" name="txt_code" ng-model="student.code" type="text" placeholder="Escriba código del estudiante" class="form-control input-md" required="required">
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="txt_name">Nombre</label>
+                <div class="col-md-6">
+                    <input id="txt_name" name="txt_name" ng-model="student.name" type="text" placeholder="Escriba nombre del estudiante" class="form-control input-md" required="required">
 
+                </div>
             </div>
-        </div>
 
-        <!-- Text input-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="txt_email">Email</label>
-            <div class="col-md-6">
-                <input id="txt_email" name="txt_email" ng-model="student.email" type="text" placeholder="Escriba email del estudiante" class="form-control input-md" required="required">
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="txt_code">Código</label>
+                <div class="col-md-6">
+                    <input id="txt_code" name="txt_code" ng-model="student.code" type="text" placeholder="Escriba código del estudiante" class="form-control input-md" required="required">
 
+                </div>
             </div>
-        </div>
 
-    </fieldset>
-</form>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="txt_email">Email</label>
+                <div class="col-md-6">
+                    <input id="txt_email" name="txt_email" ng-model="student.email" type="text" placeholder="Escriba email del estudiante" class="form-control input-md" required="required">
+
+                </div>
+            </div>
+
+        </fieldset>
+        </form>
+    </div> 
+    <div role="tabpanel" class="tab-pane" id="tab_courses">
+    <legend>
+    <div class="container-fluid">
+                    <a href="#/dashboard/student" class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
+                    </div>
+                    </legend>
+    <div class="col-xs-8 col-sm-9 col-md-9">
+        <div class="row">
+            <table st-table="student.Courses" class="table table-striped">
+                <thead>
+                <tr>
+                <th colspan="5">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label pull-left" for="txt_course">Curso</label>
+                        <div class="pull-left">
+                            <div class="input-group">
+                                <input id="txt_course" name="txt_course" class="form-control" placeholder="Escriba curso a agregar" type="text" required="">
+                                <span class="input-group-btn">
+                                  <button class="btn btn-default" ng-click="add_course()" type="button">Agregar</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>  
+                </th>
+                </tr>
+                <tr>
+                    <th colspan="5"><input st-search="" class="form-control" placeholder="busqueda global..." type="text"/></th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td st-sort="name"><h4>Nombre</h4></td>
+                    <td st-sort="code"><h4>Código</h4></td>
+                    <td>    
+                        <div class="dropdown">
+                          <button class="btn btn-danger dropdown-toggle" type="button" id="dropdown_actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Acciones
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdown_actions">
+                             <li><a tabindex="-1" ng-click="delete_course()"  href="javascript:;">Eliminar</a></li>
+                          </ul>
+                        </div>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="course in student.Courses">
+                    <td><input ng-model="selection[course.id]" type="checkbox"></td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.code}}</td>
+                    <td>
+                        <a class="btn btn-danger" data-toggle="tooltip" data-placement="top"  title="Eliminar" aria-label="Eliminar" ng-click="delete_course(course)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+                <tr ng-show="courses.length == 0">
+                    <th colspan="5" style="text-align:center">No Records Found..!</th>
+                </tr>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <div st-pagination="" st-items-by-page="itembypage" st-displayed-pages="displayedpages"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    </div>
+  </div>
 </div>
 
