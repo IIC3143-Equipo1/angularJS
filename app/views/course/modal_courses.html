@@ -1,0 +1,27 @@
+<div class="col-xs-8 col-sm-9 col-md-9">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <td style="text-align:center"><h4>#</h4></td>
+                <td><h4>Nombre</h4></td>
+                <td><h4>Código</h4></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="course in courses">
+                <td style="text-align:center">{{sno_courses($index)}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.code}}</td>
+                <td>
+                     <a class="btn btn-success" data-placement="top"  title="Cursos" aria-label="Cursos" ng-click="select_course(course)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                </td>
+            </tbody>
+            </tr>
+            <tr ng-show="courses.length == 0">
+                <td colspan="4" style="text-align:center">No Records Found..!</td>
+            </tr>
+        </table>
+       <paginate servicename="Course" model="courses" src="all_courses"></paginate>
+    </div>
+</div>

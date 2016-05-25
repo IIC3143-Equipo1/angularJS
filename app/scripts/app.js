@@ -17,25 +17,62 @@ angular
     'ngCookies',
     'smart-table'
   ])
-  .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+  .config(['$stateProvider','$httpProvider','$urlRouterProvider','$ocLazyLoadProvider',
+    function ($stateProvider,$httpProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+
+    $httpProvider.defaults.withCredentials = true;
 
     $ocLazyLoadProvider.config({
       debug:false,
       events:true,
     });
 
+    $httpProvider.interceptors.push(function($q, $location) { 
+      return { response: function(response) { 
+      // do something on success 
+        return response; 
+        }, responseError: function(response) { 
+          if (response.status === 401) 
+            $location.url('/login'); 
+          return $q.reject(response); 
+        } 
+      }; 
+    }); 
+
     $urlRouterProvider.otherwise('/login');
+
+    var checkLoggedin = function($q, $timeout, $http, $state, $rootScope){ 
+      // Initialize a new promise 
+      var deferred = $q.defer(); 
+      // Make an AJAX call to check if the user is logged in 
+      //http://localhost:5001
+      $http.get('https://evaluat-e-api.herokuapp.com/loggedin').success(function(user){ 
+        // Authenticated 
+        if (user !== '0') 
+        {
+          deferred.resolve(); // Not Authenticated 
+        }
+        else { 
+          deferred.reject(); 
+          $state.go('login');
+        } 
+      }); 
+      return deferred.promise; 
+    }; 
 
     $stateProvider
       .state('dashboard', {
         url:'/dashboard',
         templateUrl: 'views/dashboard/main.html',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                 {
                     name:'evaluateApp',
                     files:[
+                    'scripts/controllers/login.js',
+                    'scripts/services/login.js',
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
                     'scripts/directives/sidebar/sidebar.js',
@@ -82,47 +119,47 @@ angular
         controller: 'MainCtrl',
         templateUrl:'views/dashboard/home.html',
         resolve: {
+          loggedin: checkLoggedin,
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-              'scripts/controllers/main.js',
-              'scripts/directives/timeline/timeline.js',
-              'scripts/directives/notifications/notifications.js',
-              'scripts/directives/chat/chat.js',
-              'scripts/directives/dashboard/stats/stats.js'
+                'scripts/controllers/main.js',
+                'scripts/directives/timeline/timeline.js',
+                'scripts/directives/notifications/notifications.js',
+                'scripts/directives/chat/chat.js',
+                'scripts/directives/dashboard/stats/stats.js'
               ]
             })
           }
         }
-    })
-      .state('dashboard.form',{
-        templateUrl:'views/form.html',
-        url:'/form'
     })
       .state('dashboard.survey',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey.html',
         url:'/survey',
         resolve: {
-            loadMyDirectives:function($ocLazyLoad){
-                return $ocLazyLoad.load(
-                    {
-                        name:'evaluateApp',
-                        files:[
-                            'scripts/services/survey.js',
-                            'scripts/controllers/survey.js',
-                            'scripts/directives/pagination/pagination.js',
-                            'scripts/services/general.js',
-                            'scripts/services/student.js'
-                        ]
-                    })}
+          loggedin: checkLoggedin,
+          loadMyDirectives:function($ocLazyLoad){
+              return $ocLazyLoad.load(
+                  {
+                      name:'evaluateApp',
+                      files:[
+                          'scripts/services/survey.js',
+                          'scripts/controllers/survey.js',
+                          'scripts/directives/pagination/pagination.js',
+                          'scripts/services/general.js',
+                          'scripts/services/student.js',
+                          'scripts/services/course.js'
+                      ]
+                  })}
     }})
       .state('dashboard.survey_new',{
         controller: 'SurveyCtrl',
         templateUrl:'views/survey/survey-add.html',
         url:'/survey/new',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -133,7 +170,9 @@ angular
                             'scripts/directives/knowledgeArea/knowledgeArea.js',
                             'scripts/directives/knowledgeArea/question/question.js',
                             'scripts/directives/knowledgeArea/answer/answer.js',
-                            'scripts/services/general.js'
+                            'scripts/services/general.js',
+                            'scripts/services/student.js',
+                            'scripts/services/course.js'
                         ]
                     })}
     }})
@@ -142,6 +181,7 @@ angular
         templateUrl:'views/survey/survey-edit.html',
         url:'/survey/:id/edit',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -152,23 +192,41 @@ angular
                             'scripts/directives/knowledgeArea/knowledgeArea.js',
                             'scripts/directives/knowledgeArea/question/question.js',
                             'scripts/directives/knowledgeArea/answer/answer.js',
-                            'scripts/services/general.js'
+                            'scripts/services/general.js',
+                            'scripts/services/student.js',
+                            'scripts/services/course.js'
                         ]
                     })}
     }})
       .state('login',{
         templateUrl:'views/dashboard/login.html',
-        url:'/login'
+        controller:'LoginCtrl',
+        url:'/login',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'evaluateApp',
+              files:[
+                'scripts/controllers/login.js',
+                'scripts/services/login.js',
+              ]
+            })
+          }
+        }
     })
       .state('dashboard.auth',{
         templateUrl:'views/dashboard/auth.html',
-        url:'/auth'
+        url:'/auth',
+        resolve:{
+          loggedin: checkLoggedin
+        }
     })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',
         controller:'ChartCtrl',
         resolve: {
+          loggedin: checkLoggedin,
           loadMyFile:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'chart.js',
@@ -189,14 +247,16 @@ angular
         controller:'CourseCtrl',
         url:'/course',
            resolve: {
-          loadMyFiles:function($ocLazyLoad) {
+            loggedin: checkLoggedin,
+            loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-              'scripts/controllers/course.js',
-              'scripts/services/course.js',
-              'scripts/directives/pagination/pagination.js',
-              'scripts/services/general.js'
+                'scripts/controllers/course.js',
+                'scripts/services/course.js',
+                'scripts/services/student.js',
+                'scripts/directives/pagination/pagination.js',
+                'scripts/services/general.js'
               ]
             })
           }
@@ -207,6 +267,7 @@ angular
         templateUrl:'views/course/course-add.html',
         url:'/course/new',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -223,6 +284,7 @@ angular
         templateUrl:'views/course/course-edit.html',
         url:'/course/:id/edit',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -239,15 +301,16 @@ angular
         controller:'StudentCtrl',
         url:'/student',
            resolve: {
-          loadMyFiles:function($ocLazyLoad) {
+            loggedin: checkLoggedin,
+            loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-              'scripts/controllers/student.js',
-              'scripts/services/student.js',
-              'scripts/services/course.js',
-              'scripts/services/general.js',
-              'scripts/directives/pagination/pagination.js'
+                'scripts/controllers/student.js',
+                'scripts/services/student.js',
+                'scripts/services/course.js',
+                'scripts/services/general.js',
+                'scripts/directives/pagination/pagination.js'
               ]
             })
           }
@@ -258,6 +321,7 @@ angular
         templateUrl:'views/student/student-add.html',
         url:'/student/new',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -275,6 +339,7 @@ angular
         templateUrl:'views/student/student-edit.html',
         url:'/student/:id/edit',
         resolve: {
+            loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
                 return $ocLazyLoad.load(
                     {
@@ -288,12 +353,10 @@ angular
                     })}
     }})
   }]).value('url_api', 'https://evaluat-e-api.herokuapp.com/');
+    /*
     //http://localhost:5001
-    //
     /*
     .run(function($state,$rootScope) {
-
         $state.go('dashboard.home');
-
     });*/
     

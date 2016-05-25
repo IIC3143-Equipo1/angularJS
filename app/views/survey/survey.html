@@ -6,8 +6,7 @@
             <tr>
                 <td></td>
                 <td style="text-align:center"><h4>#</h4></td>
-                <td><h4>Id</h4></td>
-                <td><h4>Nombre  </h4></td>
+                <td><h4>Nombre</h4></td>
                 <td>    
                     <div class="dropdown">
                       <button class="btn btn-danger dropdown-toggle" type="button" id="dropdown_actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -25,12 +24,11 @@
             <tr ng-repeat="survey in surveis">
                 <td><input ng-model="selection[survey.id]" type="checkbox"></td>
                 <td style="text-align:center">{{sno($index)}}</td>
-                <td>{{survey.id}}</td>
                 <td>{{survey.name}}</td>
                 <td>
                     <a class="btn btn-primary" data-toggle="tooltip" title="Editar" aria-label="Editar" data-placement="top" ui-sref="dashboard.survey_edit({id:survey.id})">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <a class="btn btn-danger" data-toggle="tooltip" data-placement="top"  title="Eliminar" aria-label="Eliminar" ng-click="delete_survey(survey)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                    <a class="btn btn-success" data-placement="top"  title="Estudiantes" aria-label="Estudiantes" data-toggle="modal" data-target="#students_survey_modal" ng-click="open_students(survey)"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                    <a class="btn btn-success" data-placement="top"  title="Estudiantes" aria-label="Estudiantes" data-toggle="modal" data-target="#students_survey_modal" ng-click="open_students(survey)"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
                 </td>
             </tbody>
             </tr>
@@ -44,20 +42,16 @@
 
 <!-- Modal -->
 <div class="modal fade" id="students_survey_modal" tabindex="-1" role="dialog" aria-labelledby="students_survey_modal">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Estudiantes</h4>
             </div>
             <div class="modal-body">
-
-                    <div class="container-fluid">
-                        
-                       <div ng-include="'views/student/modal_students.html'"></div>
-
-            </div>
-
+                <div class="container-fluid">      
+                   <div ng-include="'views/student/modal_students.html'"></div>
+                </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>

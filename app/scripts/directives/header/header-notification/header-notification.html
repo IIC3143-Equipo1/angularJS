@@ -199,7 +199,9 @@
             <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>-->
             </li>
             <li class="divider"></li>
-            <li><a ui-sref="login"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+            <li ng-controller="LoginCtrl">
+            <a href="javascript:;" ng-click="signout()">
+            <i class="fa fa-sign-out fa-fw"></i> Salir</a>
             </li>
         </ul>
         <!-- /.dropdown-user -->

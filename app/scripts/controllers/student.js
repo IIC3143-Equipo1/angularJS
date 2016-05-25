@@ -30,13 +30,6 @@ angular.module('evaluateApp')
           var last_pages_val = Math.ceil(last_page);
           $scope.displayedpages = last_pages_val;
 
-          /*$( "#txt_course" ).autocomplete({
-              source: $scope.course_list,
-              select: function( event, ui ) {
-                console.log('add_course');
-              }
-          });*/
-
           $("#txt_course").autocomplete({
               minLength: 3,
               source: function( request, response ) {

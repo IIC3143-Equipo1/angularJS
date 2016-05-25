@@ -8,34 +8,35 @@
  */
 angular.module('evaluateApp')
     .controller('SurveyCtrl', ['$scope','$timeout','$compile','$state',
-      '$stateParams','Survey','Student','popupService','$http','$q','url_api', function($scope,$timeout,$compile,$state,
-        $stateParams,Survey,Student,popupService,$http,$q,url_api) {
+      '$stateParams','Survey','Student','Course','popupService','$http','$q','url_api', function($scope,$timeout,$compile,$state,
+        $stateParams,Survey,Student,Course,popupService,$http,$q,url_api) {
           $scope.list_knowledge_areas = [];
           $scope.list_answer_options  = [];
           $scope.selection            = [];
           $scope.selection_students   = [];
           $scope.current_answer;
-          $scope.current_survey;
-
-       /**********BORRAR ESTO **************/
-       $scope.selection_courses    = [];
-
-       $scope.courses = [{id:1,name:'Cuarto elemental',code:'c400'},{id:2,name:'Quinto elemental',code:'c500'},{id:3,name:'Sexto elemental',code:'c600'}]; //Student.get({id:id});
-       
-       $scope.sno_courses = function (index) {
-            var from = 5 * (0) + 1;
-            return from + index;
-          };
-       /***********************************/
+          $scope.current_id;
+          $scope.is_modal_send = true;
 
           $scope.sno_students = function (index) {
             var from = 5 * ($scope.all_students.current_page - 1) + 1;
             return from + index;
           };  
 
+          $scope.sno_courses = function (index) {
+            var from = 5 * ($scope.all_courses.current_page - 1) + 1;
+            return from + index;
+          }; 
+
+          $scope.select_course = function(course){
+            $('#sel_course').val(course.id);
+            $('#course_modal').modal('hide');
+
+          };
+
           $scope.open_students = function(survey){
               //$scope.students = [{id:1,name:'Juan Diaz',email:'jddiaz4@uc.cl'},{id:2,name:'Pablo',email:'pmessina@uc.cl'},{id:3,name:'Nicolas Cerda',email:'ncerda@uc.cl'}]; //Student.get({id:id});
-              $scope.current_survey = survey;
+              $scope.current_id = survey.id_course;
               $scope.load_grid_students(survey);
           };
 
@@ -126,6 +127,7 @@ angular.module('evaluateApp')
           con encuestas al abrir la vista*/
           $scope.load_grid = function(){
               Survey.get({}, function (response) {
+                console.log(response);
                 $scope.surveis     = response.rows;
                 $scope.all_surveis = response;
               }, function (error) {
@@ -148,6 +150,14 @@ angular.module('evaluateApp')
           /*Metodo para inicializar algunas
           funcionalidades necesarias */
           $scope.init = function(){
+
+              Course.get({}, function (response) {
+                $scope.all_courses = response;
+                $scope.courses     = response.rows;  
+              }, function (error) {
+                  $scope.courses = [];
+              });
+
               $('#list_kw_areas').collapse();
               var knowledge_areas = [
                   "Ciencias",

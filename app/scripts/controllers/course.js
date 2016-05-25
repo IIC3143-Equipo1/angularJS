@@ -7,15 +7,23 @@
  * Controller of the evaluateApp
  */
 angular.module('evaluateApp')
-  .controller('CourseCtrl',['$scope','$state','$stateParams','Course','popupService', 
-    function($scope,$state,$stateParams,Course,popupService) {
+  .controller('CourseCtrl',['$scope','Student','$state','$stateParams','Course','popupService', 
+    function($scope,Student,$state,$stateParams,Course,popupService) {
 
     $scope.selection = [];
+    $scope.current_id;
+    $scope.is_modal_send = false;
 
     $scope.sno_courses = function (index) {
           var from = 5 * ($scope.all_courses.current_page - 1)  + 1;
           return from + index;
       };
+
+      $scope.open_students = function(course){
+          $scope.current_id = course.id;
+          $scope.load_grid_students(course);
+      };
+
 
      $scope.course_save = function(){
       if(!$("#txt_name").val()){$scope.show_alert('Debes digitar un nombre '); return false;}
@@ -98,6 +106,18 @@ angular.module('evaluateApp')
             $scope.courses = [];
         });
      };
+
+    $scope.load_grid_students = function(course){
+        var result = Student.http.getStudentsByCourse(course.id,1); 
+        result.then(function(response){
+          $scope.students     = response.data.rows;
+          $scope.all_students = response.data;
+        },
+        function(error){
+          $scope.students = [];
+        });
+     };
+
 
      $scope.load_grid = function(){
 	      Course.get({}, function (response) {
