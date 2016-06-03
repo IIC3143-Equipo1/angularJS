@@ -28,8 +28,8 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="{{name}}_sel_question_type">Tipo pregunta</label>
             <div class="col-md-6">
-                <select id="{{name}}_sel_question_type" ng-init="questionx.type = questionx.type || '0'" ng-model="questionx.type" name="type" class="form-control" data-question-info="{{name}}_sel_question_type">
-                    <option value="0">Seleccione tipo pregunta</option>
+                <select id="{{name}}_sel_question_type" ng-init="questionx.type = questionx.type || ''" ng-model="questionx.type" name="type" class="form-control" data-question-info="{{name}}_sel_question_type" required="">
+                    <option value ="" selected disabled>Seleccione tipo pregunta</option>
                     <option value="1">Abierta</option>
                     <option value="2">Unica respuesta</option>
                     <option value="3">Selección multiple</option>

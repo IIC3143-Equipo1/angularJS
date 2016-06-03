@@ -18,7 +18,7 @@ angular
     'smart-table'
   ])
   .config(['$stateProvider','$httpProvider','$urlRouterProvider','$ocLazyLoadProvider',
-    function ($stateProvider,$httpProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+    function ($stateProvider,$httpProvider,$urlRouterProvider,$ocLazyLoadProvider,$rootscope) {
 
     $httpProvider.defaults.withCredentials = true;
 
@@ -41,12 +41,12 @@ angular
 
     $urlRouterProvider.otherwise('/login');
 
-    var checkLoggedin = function($q, $timeout, $http, $state, $rootScope){ 
+    var checkLoggedin = function($q, $http, $state){ 
       // Initialize a new promise 
       var deferred = $q.defer(); 
       // Make an AJAX call to check if the user is logged in 
       //http://localhost:5001
-      $http.get('https://evaluat-e-api.herokuapp.com/loggedin').success(function(user){ 
+      $http.get('http://localhost:5001/loggedin').success(function(user){ 
         // Authenticated 
         if (user !== '0') 
         {
@@ -73,6 +73,7 @@ angular
                     files:[
                     'scripts/controllers/login.js',
                     'scripts/services/login.js',
+                    'scripts/services/general.js',
                     'scripts/directives/header/header.js',
                     'scripts/directives/header/header-notification/header-notification.js',
                     'scripts/directives/sidebar/sidebar.js',
@@ -198,6 +199,67 @@ angular
                         ]
                     })}
     }})
+      .state('answer_form',{
+        controller: 'AnswerCtrl',
+        templateUrl:'views/answer/answer-form.html',
+        url:'/answer_form/:hash',
+        resolve: {
+            //loggedin: checkLoggedin,
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/survey.js',
+                            'scripts/controllers/answer.js',
+                            'scripts/services/general.js',
+                            'scripts/services/student.js',
+                            'scripts/services/course.js',
+                            'scripts/services/answer.js'
+                        ]
+                    })}
+    }})
+      .state('dashboard.answer',{
+        controller: 'AnswerCtrl',
+        templateUrl:'views/answer/answer.html',
+        url:'/answer',
+        resolve: {
+            //loggedin: checkLoggedin,
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/survey.js',
+                            'scripts/controllers/answer.js',
+                            'scripts/services/general.js',
+                            'scripts/services/student.js',
+                            'scripts/directives/pagination/pagination.js',
+                            'scripts/services/course.js',
+                            'scripts/services/answer.js'
+                        ]
+                    })}
+    }})
+      .state('dashboard.answer_view',{
+        controller: 'AnswerCtrl',
+        templateUrl:'views/answer/answer-view.html',
+        url:'/answer/:id/view',
+        resolve: {
+            //loggedin: checkLoggedin,
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/services/survey.js',
+                            'scripts/controllers/answer.js',
+                            'scripts/services/general.js',
+                            'scripts/services/student.js',
+                            'scripts/services/course.js',
+                            'scripts/services/answer.js'
+                        ]
+                    })}
+    }})
       .state('login',{
         templateUrl:'views/dashboard/login.html',
         controller:'LoginCtrl',
@@ -209,6 +271,7 @@ angular
               files:[
                 'scripts/controllers/login.js',
                 'scripts/services/login.js',
+                'scripts/services/general.js'
               ]
             })
           }
@@ -352,9 +415,9 @@ angular
                         ]
                     })}
     }})
-  }]).value('url_api', 'https://evaluat-e-api.herokuapp.com/');
-    /*
-    //http://localhost:5001
+  }]).value('url_api', 'http://localhost:5001/');
+    /*https://evaluat-e-api.herokuapp.com/
+    //
     /*
     .run(function($state,$rootScope) {
         $state.go('dashboard.home');

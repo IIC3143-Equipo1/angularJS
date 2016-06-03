@@ -21,7 +21,6 @@ angular.module('evaluateApp')
       };
 
       $scope.init_courses = function(){
-        console.log($scope.student);
         if(typeof $scope.student != 'undefined'){
           Course.get({}, function (response) {
           $scope.course_list     = response.rows;

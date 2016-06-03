@@ -19,7 +19,6 @@ angular.module('evaluateApp')
                 $scope.delete_answer = function(event){
                     var preAnswer = event.currentTarget.parentNode.parentNode.innerText;
                     var answer = preAnswer.substr(2);
-                    console.log($scope.$parent);
                     $scope.$parent.list_answer_options[$scope.$parent.current_answer] =$.grep($scope.$parent.list_answer_options[$scope.$parent.current_answer],
                         function(value) {
                             return value != answer;

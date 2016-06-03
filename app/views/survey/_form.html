@@ -1,12 +1,12 @@
 <div ng-init="init()">
 <div id="alert" class="notification-msg"></div>
 
-<form class="form-horizontal">
+<form class="form-horizontal" name="survey_form">
     <fieldset>
         <!-- Form Name -->
         <legend><div class="container-fluid">
             <a href="#/dashboard/survey" class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
-            <button type="button" ng-click="survey_save()" class="btn btn-default navbar-btn navbar-right" formnovalidate>Guardar</button>
+            <button type="button" ng-click="survey_save()" class="btn btn-default navbar-btn navbar-right">Guardar</button>
         </div>
         </legend>
 
@@ -40,7 +40,7 @@
             <label class="col-md-4 control-label" for="txt_knowledge_area">Área de Conocimiento</label>
             <div class="col-md-6">
                 <div class="input-group">
-                    <input id="txt_knowledge_area" name="txt_knowledge_area" class="form-control" placeholder="Escriba area de conocimiento" type="text" required="">
+                    <input id="txt_knowledge_area" name="txt_knowledge_area" class="form-control" placeholder="Escriba area de conocimiento" type="text">
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="button" add-knowledge-area>Agregar</button>
                     </span>

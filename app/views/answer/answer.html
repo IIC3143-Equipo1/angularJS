@@ -1,0 +1,27 @@
+<div class="col-xs-8 col-sm-9 col-md-9" ng-init="load_grid()">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <td style="text-align:center"><h4>#</h4></td>
+                <td><h4>Encuesta</h4></td>
+                <td><h4>Estudiante</h4></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="answer in answers">
+                <td style="text-align:center">{{sno_answers($index)}}</td>
+                <td>{{answer.Survey.name}}</td>
+                <td>{{answer.Student.name}}</td>
+                <td>
+                    <a class="btn btn-primary" data-toggle="tooltip" title="Editar" aria-label="Editar" data-placement="top" ui-sref="dashboard.answer_view({id:answer.id})">  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                </td>
+            </tbody>
+            </tr>
+            <tr ng-show="answers.length == 0">
+                <td colspan="4" style="text-align:center">No Records Found..!</td>
+            </tr>
+        </table>
+       <paginate servicename="Answer" model="answers" src="all_answers"></paginate>
+    </div>
+</div>
