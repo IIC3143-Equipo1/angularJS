@@ -1,4 +1,4 @@
-var debug = require('debug')('express-example');
+//var debug = require('debug')('express-example');
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -25,6 +25,6 @@ app.use(function(req, res, next) {
     next(); // make sure we go to the next routes and don't stop here
 });
   var server = app.listen(app.get('port'), function() {
-    debug('Express server listening on port ' + server.address().port);
+    console.log('Express server listening on port ' + server.address().port);
   });
 

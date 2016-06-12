@@ -46,7 +46,7 @@ angular
       var deferred = $q.defer(); 
       // Make an AJAX call to check if the user is logged in 
       //http://localhost:5001
-      $http.get('http://dsw1.ing.puc.cl/evaluate/loggedin').success(function(user){ 
+      $http.get('http://dsw1.ing.puc.cl/loggedin').success(function(user){ 
         // Authenticated 
         if (user !== '0') 
         {
@@ -63,7 +63,7 @@ angular
     $stateProvider
       .state('dashboard', {
         url:'/dashboard',
-        templateUrl: 'views/dashboard/main.html',
+        templateUrl: 'evaluate/views/dashboard/main.html',
         resolve: {
             loggedin: checkLoggedin,
             loadMyDirectives:function($ocLazyLoad){
@@ -71,46 +71,46 @@ angular
                 {
                     name:'evaluateApp',
                     files:[
-                    'scripts/controllers/login.js',
-                    'scripts/services/login.js',
-                    'scripts/services/general.js',
-                    'scripts/directives/header/header.js',
-                    'scripts/directives/header/header-notification/header-notification.js',
-                    'scripts/directives/sidebar/sidebar.js',
-                    'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
+                    'evaluate/scripts/controllers/login.js',
+                    'evaluate/scripts/services/login.js',
+                    'evaluate/scripts/services/general.js',
+                    'evaluate/scripts/directives/header/header.js',
+                    'evaluate/scripts/directives/header/header-notification/header-notification.js',
+                    'evaluate/scripts/directives/sidebar/sidebar.js',
+                    'evaluate/scripts/directives/sidebar/sidebar-search/sidebar-search.js'
                     ]
                 }),
                 $ocLazyLoad.load(
                 {
                    name:'toggle-switch',
-                   files:["bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
-                          "bower_components/angular-toggle-switch/angular-toggle-switch.css"
+                   files:["evaluate/bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
+                          "evaluate/bower_components/angular-toggle-switch/angular-toggle-switch.css"
                       ]
                 }),
                 $ocLazyLoad.load(
                 {
                   name:'ngAnimate',
-                  files:['bower_components/angular-animate/angular-animate.js']
+                  files:['evaluate/bower_components/angular-animate/angular-animate.js']
                 })
                 $ocLazyLoad.load(
                 {
                   name:'ngCookies',
-                  files:['bower_components/angular-cookies/angular-cookies.js']
+                  files:['evaluate/bower_components/angular-cookies/angular-cookies.js']
                 })
                 $ocLazyLoad.load(
                 {
                   name:'ngResource',
-                  files:['bower_components/angular-resource/angular-resource.js']
+                  files:['evaluate/bower_components/angular-resource/angular-resource.js']
                 })
                 $ocLazyLoad.load(
                 {
                   name:'ngSanitize',
-                  files:['bower_components/angular-sanitize/angular-sanitize.js']
+                  files:['evaluate/bower_components/angular-sanitize/angular-sanitize.js']
                 })
                 $ocLazyLoad.load(
                 {
                   name:'ngTouch',
-                  files:['bower_components/angular-touch/angular-touch.js']
+                  files:['evaluate/bower_components/angular-touch/angular-touch.js']
                 })
             }
         }
@@ -118,18 +118,18 @@ angular
       .state('dashboard.home',{
         url:'/home',
         controller: 'MainCtrl',
-        templateUrl:'views/dashboard/home.html',
+        templateUrl:'evaluate/views/dashboard/home.html',
         resolve: {
           loggedin: checkLoggedin,
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-                'scripts/controllers/main.js',
-                'scripts/directives/timeline/timeline.js',
-                'scripts/directives/notifications/notifications.js',
-                'scripts/directives/chat/chat.js',
-                'scripts/directives/dashboard/stats/stats.js'
+                'evaluate/scripts/controllers/main.js',
+                'evaluate/scripts/directives/timeline/timeline.js',
+                'evaluate/scripts/directives/notifications/notifications.js',
+                'evaluate/scripts/directives/chat/chat.js',
+                'evaluate/scripts/directives/dashboard/stats/stats.js'
               ]
             })
           }
@@ -137,7 +137,7 @@ angular
     })
       .state('dashboard.survey',{
         controller: 'SurveyCtrl',
-        templateUrl:'views/survey/survey.html',
+        templateUrl:'evaluate/views/survey/survey.html',
         url:'/survey',
         resolve: {
           loggedin: checkLoggedin,
@@ -146,12 +146,12 @@ angular
                   {
                       name:'evaluateApp',
                       files:[
-                          'scripts/services/survey.js',
-                          'scripts/controllers/survey.js',
-                          'scripts/directives/pagination/pagination.js',
-                          'scripts/services/general.js',
-                          'scripts/services/student.js',
-                          'scripts/services/course.js'
+                          'evaluate/scripts/services/survey.js',
+                          'evaluate/scripts/controllers/survey.js',
+                          'evaluate/scripts/directives/pagination/pagination.js',
+                          'evaluate/scripts/services/general.js',
+                          'evaluate/scripts/services/student.js',
+                          'evaluate/scripts/services/course.js'
                       ]
                   })}
     }})
@@ -166,20 +166,20 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/survey.js',
-                            'scripts/controllers/survey.js',
-                            'scripts/directives/knowledgeArea/knowledgeArea.js',
-                            'scripts/directives/knowledgeArea/question/question.js',
-                            'scripts/directives/knowledgeArea/answer/answer.js',
-                            'scripts/services/general.js',
-                            'scripts/services/student.js',
-                            'scripts/services/course.js'
+                            'evaluate/scripts/services/survey.js',
+                            'evaluate/scripts/controllers/survey.js',
+                            'evaluate/scripts/directives/knowledgeArea/knowledgeArea.js',
+                            'evaluate/scripts/directives/knowledgeArea/question/question.js',
+                            'evaluate/scripts/directives/knowledgeArea/answer/answer.js',
+                            'evaluate/scripts/services/general.js',
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/services/course.js'
                         ]
                     })}
     }})
       .state('dashboard.survey_edit',{
         controller: 'SurveyCtrl',
-        templateUrl:'views/survey/survey-edit.html',
+        templateUrl:'evaluate/views/survey/survey-edit.html',
         url:'/survey/:id/edit',
         resolve: {
             loggedin: checkLoggedin,
@@ -188,20 +188,20 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/survey.js',
-                            'scripts/controllers/survey.js',
-                            'scripts/directives/knowledgeArea/knowledgeArea.js',
-                            'scripts/directives/knowledgeArea/question/question.js',
-                            'scripts/directives/knowledgeArea/answer/answer.js',
-                            'scripts/services/general.js',
-                            'scripts/services/student.js',
-                            'scripts/services/course.js'
+                            'evaluate/scripts/services/survey.js',
+                            'evaluate/scripts/controllers/survey.js',
+                            'evaluate/scripts/directives/knowledgeArea/knowledgeArea.js',
+                            'evaluate/scripts/directives/knowledgeArea/question/question.js',
+                            'evaluate/scripts/directives/knowledgeArea/answer/answer.js',
+                            'evaluate/scripts/services/general.js',
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/services/course.js'
                         ]
                     })}
     }})
       .state('answer_form',{
         controller: 'AnswerCtrl',
-        templateUrl:'views/answer/answer-form.html',
+        templateUrl:'evaluate/views/answer/answer-form.html',
         url:'/answer_form/:hash',
         resolve: {
             //loggedin: checkLoggedin,
@@ -210,18 +210,18 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/survey.js',
-                            'scripts/controllers/answer.js',
-                            'scripts/services/general.js',
-                            'scripts/services/student.js',
-                            'scripts/services/course.js',
-                            'scripts/services/answer.js'
+                            'evaluate/scripts/services/survey.js',
+                            'evaluate/scripts/controllers/answer.js',
+                            'evaluate/scripts/services/general.js',
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/services/answer.js'
                         ]
                     })}
     }})
       .state('dashboard.answer',{
         controller: 'AnswerCtrl',
-        templateUrl:'views/answer/answer.html',
+        templateUrl:'evaluate/views/answer/answer.html',
         url:'/answer',
         resolve: {
             //loggedin: checkLoggedin,
@@ -230,19 +230,19 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/survey.js',
-                            'scripts/controllers/answer.js',
-                            'scripts/services/general.js',
-                            'scripts/services/student.js',
-                            'scripts/directives/pagination/pagination.js',
-                            'scripts/services/course.js',
-                            'scripts/services/answer.js'
+                            'evaluate/scripts/services/survey.js',
+                            'evaluate/scripts/controllers/answer.js',
+                            'evaluate/scripts/services/general.js',
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/directives/pagination/pagination.js',
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/services/answer.js'
                         ]
                     })}
     }})
       .state('dashboard.answer_view',{
         controller: 'AnswerCtrl',
-        templateUrl:'views/answer/answer-view.html',
+        templateUrl:'evaluate/views/answer/answer-view.html',
         url:'/answer/:id/view',
         resolve: {
             //loggedin: checkLoggedin,
@@ -251,17 +251,17 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/survey.js',
-                            'scripts/controllers/answer.js',
-                            'scripts/services/general.js',
-                            'scripts/services/student.js',
-                            'scripts/services/course.js',
-                            'scripts/services/answer.js'
+                            'evaluate/scripts/services/survey.js',
+                            'evaluate/scripts/controllers/answer.js',
+                            'evaluate/scripts/services/general.js',
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/services/answer.js'
                         ]
                     })}
     }})
       .state('login',{
-        templateUrl:'views/dashboard/login.html',
+        templateUrl:'evaluate/views/dashboard/login.html',
         controller:'LoginCtrl',
         url:'/login',
         resolve: {
@@ -269,23 +269,23 @@ angular
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-                'scripts/controllers/login.js',
-                'scripts/services/login.js',
-                'scripts/services/general.js'
+                'evaluate/scripts/controllers/login.js',
+                'evaluate/scripts/services/login.js',
+                'evaluate/scripts/services/general.js'
               ]
             })
           }
         }
     })
       .state('dashboard.auth',{
-        templateUrl:'views/dashboard/auth.html',
+        templateUrl:'evaluate/views/dashboard/auth.html',
         url:'/auth',
         resolve:{
           loggedin: checkLoggedin
         }
     })
       .state('dashboard.chart',{
-        templateUrl:'views/chart.html',
+        templateUrl:'evaluate/views/chart.html',
         url:'/chart',
         controller:'ChartCtrl',
         resolve: {
@@ -294,19 +294,19 @@ angular
             return $ocLazyLoad.load({
               name:'chart.js',
               files:[
-                'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                'bower_components/angular-chart.js/dist/angular-chart.css'
+                'evaluate/bower_components/angular-chart.js/dist/angular-chart.min.js',
+                'evaluate/bower_components/angular-chart.js/dist/angular-chart.css'
               ]
             }),
             $ocLazyLoad.load({
                 name:'evaluateApp',
-                files:['scripts/controllers/chart.js']
+                files:['evaluate/scripts/controllers/chart.js']
             })
           }
         }
     })
       .state('dashboard.course',{
-        templateUrl:'views/course/course.html',
+        templateUrl:'evaluate/views/course/course.html',
         controller:'CourseCtrl',
         url:'/course',
            resolve: {
@@ -315,11 +315,11 @@ angular
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-                'scripts/controllers/course.js',
-                'scripts/services/course.js',
-                'scripts/services/student.js',
-                'scripts/directives/pagination/pagination.js',
-                'scripts/services/general.js'
+                'evaluate/scripts/controllers/course.js',
+                'evaluate/scripts/services/course.js',
+                'evaluate/scripts/services/student.js',
+                'evaluate/scripts/directives/pagination/pagination.js',
+                'evaluate/scripts/services/general.js'
               ]
             })
           }
@@ -327,7 +327,7 @@ angular
     })
       .state('dashboard.course_new',{
         controller: 'CourseCtrl',
-        templateUrl:'views/course/course-add.html',
+        templateUrl:'evaluate/views/course/course-add.html',
         url:'/course/new',
         resolve: {
             loggedin: checkLoggedin,
@@ -336,15 +336,15 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/course.js',
-                            'scripts/controllers/course.js',
-                            'scripts/services/general.js'
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/controllers/course.js',
+                            'evaluate/scripts/services/general.js'
                         ]
                     })}
     }})
       .state('dashboard.course_edit',{
         controller: 'CourseCtrl',
-        templateUrl:'views/course/course-edit.html',
+        templateUrl:'evaluate/views/course/course-edit.html',
         url:'/course/:id/edit',
         resolve: {
             loggedin: checkLoggedin,
@@ -353,14 +353,14 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/course.js',
-                            'scripts/controllers/course.js',
-                            'scripts/services/general.js'
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/controllers/course.js',
+                            'evaluate/scripts/services/general.js'
                         ]
                     })}
     }})
       .state('dashboard.student',{
-        templateUrl:'views/student/student.html',
+        templateUrl:'evaluate/views/student/student.html',
         controller:'StudentCtrl',
         url:'/student',
            resolve: {
@@ -369,11 +369,11 @@ angular
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
-                'scripts/controllers/student.js',
-                'scripts/services/student.js',
-                'scripts/services/course.js',
-                'scripts/services/general.js',
-                'scripts/directives/pagination/pagination.js'
+                'evaluate/scripts/controllers/student.js',
+                'evaluate/scripts/services/student.js',
+                'evaluate/scripts/services/course.js',
+                'evaluate/scripts/services/general.js',
+                'evaluate/scripts/directives/pagination/pagination.js'
               ]
             })
           }
@@ -381,7 +381,7 @@ angular
     })   
       .state('dashboard.student_new',{
         controller: 'StudentCtrl',
-        templateUrl:'views/student/student-add.html',
+        templateUrl:'evaluate/views/student/student-add.html',
         url:'/student/new',
         resolve: {
             loggedin: checkLoggedin,
@@ -390,16 +390,16 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/student.js',
-                            'scripts/controllers/student.js',
-                            'scripts/services/course.js',
-                            'scripts/services/general.js'
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/controllers/student.js',
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/services/general.js'
                         ]
                     })}
     }})
       .state('dashboard.student_edit',{
         controller: 'StudentCtrl',
-        templateUrl:'views/student/student-edit.html',
+        templateUrl:'evaluate/views/student/student-edit.html',
         url:'/student/:id/edit',
         resolve: {
             loggedin: checkLoggedin,
@@ -408,17 +408,18 @@ angular
                     {
                         name:'evaluateApp',
                         files:[
-                            'scripts/services/student.js',
-                            'scripts/controllers/student.js',
-                            'scripts/services/course.js',
-                            'scripts/services/general.js'
+                            'evaluate/scripts/services/student.js',
+                            'evaluate/scripts/controllers/student.js',
+                            'evaluate/scripts/services/course.js',
+                            'evaluate/scripts/services/general.js'
                         ]
                     })}
     }})
-  }]).value('url_api', 'http://dsw1.ing.puc.cl/evaluate/');
+  }]).value('url_api', 'http://dsw1.ing.puc.cl/');
     /*https://evaluat-e-api.herokuapp.com/
     //
     /*
     .run(function($state,$rootScope) {
         $state.go('dashboard.home');
     });*/
+    
