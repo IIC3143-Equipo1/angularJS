@@ -22,7 +22,7 @@ angular.module('evaluateApp')
 
       $scope.init_courses = function(){
         if(typeof $scope.student != 'undefined'){
-          Course.get({}, function (response) {
+          Course.resource.get({}, function (response) {
           $scope.course_list     = response.rows;
           $scope.total_courses = response.count;
           var last_page = $scope.total_courses / $scope.itemsbypage;
@@ -96,6 +96,7 @@ angular.module('evaluateApp')
       if(!$("#txt_email").val()){$scope.show_alert('Debes digitar un email '); return false;}
       if(!$("#txt_code").val()){$scope.show_alert('Debes digitar un código '); return false;}
       $scope.student.$save(function(response){
+          alert('Registro guardado correctamente');
           $state.go('dashboard.student_edit',{id:response.id});
         }); 
      };

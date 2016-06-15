@@ -3,7 +3,18 @@ angular.module('evaluateApp').service('popupService',function($window){
     this.showPopup=function(message){
         return $window.confirm(message);
     }
-}).factory("sessionService", [
+})
+.service('alertService',function(){
+	  this.showAlert =function(message, type = 'danger'){
+	  	$('#alert').html("<div class='alert alert-"+type+"'>" +
+	      "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+message+"</div>");
+	  $('#alert').alert();
+	  $("#alert").fadeTo(3000, 500).slideUp(500, function(){
+	      $("#alert").alert('close');
+	  });
+	}
+})
+.factory("sessionService", [
 	"$cookieStore", function($cookieStore) {
 		var user = {};
 

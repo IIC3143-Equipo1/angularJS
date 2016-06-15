@@ -27,6 +27,10 @@ angular.module('evaluateApp')
           else
             $scope.collapseVar = x;
         };
+
+        $('#side-menu').click(function (e) {
+          $(e.target.parentNode).toggleClass('active');
+        });
         
         $scope.multiCheck = function(y){
           

@@ -46,11 +46,12 @@ angular
       var deferred = $q.defer(); 
       // Make an AJAX call to check if the user is logged in 
       //http://localhost:5001
-      $http.get('http://dsw1.ing.puc.cl/evaluate/loggedin').success(function(user){ 
+      //http://dsw1.ing.puc.cl
+      $http.get('http://localhost:5001/evaluate/loggedin').success(function(user){ 
         // Authenticated 
         if (user !== '0') 
         {
-          deferred.resolve(); // Not Authenticated 
+          deferred.resolve(user); // Not Authenticated 
         }
         else { 
           deferred.reject(); 
@@ -125,6 +126,8 @@ angular
             return $ocLazyLoad.load({
               name:'evaluateApp',
               files:[
+                'scripts/services/survey.js',
+                'scripts/services/answer.js',
                 'scripts/controllers/main.js',
                 'scripts/directives/timeline/timeline.js',
                 'scripts/directives/notifications/notifications.js',
@@ -276,6 +279,47 @@ angular
             })
           }
         }
+    }).
+      state('dashboard.profile',{
+        templateUrl:'views/dashboard/profile.html',
+        url:'/profile',
+        resolve:{
+          loggedin:checkLoggedin
+        },
+        controller:function(loggedin,$http,url_api,sessionService,alertService,$state,$timeout){
+          this.user = loggedin; 
+          this.save = function(form){
+          if(form.txt_pass.$error.minlength){  alertService.showAlert('El password debe contener 8 o mas caracteres'); return;}
+          var data = $.param({
+               firstName: this.user.firstName,
+                lastName: this.user.lastName,
+                password: this.user.password
+            });
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            $http.post(url_api+'api/user/'+this.user.id, data, config)
+            .success(function (data, status, headers, config) {
+                var user_info = {
+                  firstName: data.firstName,
+                  username: data.username
+                };
+                sessionService.setCookieData(user_info);
+                //alert('Perfil actualizado correctamente');
+                 /*$timeout(function(){
+                    $state.reload();
+                 }, 2000);*/
+                alertService.showAlert('Perfil actualizado correctamente','success');
+
+            })
+            .error(function (data, status, header, config) {
+              console.log(data);
+            });
+          }
+        },
+        controllerAs: 'profile'
     })
       .state('dashboard.auth',{
         templateUrl:'views/dashboard/auth.html',
@@ -415,9 +459,10 @@ angular
                         ]
                     })}
     }})
-  }]).value('url_api', 'http://dsw1.ing.puc.cl/evaluate/');
+  }]).value('url_api', 'http://localhost:5001/evaluate/');
     /*https://evaluat-e-api.herokuapp.com/
-    //
+    //http://dsw1.ing.puc.cl/
+    //http://localhost:5001/
     /*
     .run(function($state,$rootScope) {
         $state.go('dashboard.home');

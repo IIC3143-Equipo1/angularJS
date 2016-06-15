@@ -17,7 +17,6 @@ angular.module('evaluateApp')
                 'position': '=?'
             },
             link: function($scope, $element, attr, parentDirectCtrl){
-                console.log($scope.position);
                 if($scope.position != null)
                 {
                       var survey_aux = $scope.$parent.survey;

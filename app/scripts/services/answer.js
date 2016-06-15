@@ -16,10 +16,24 @@ angular.module('evaluateApp').factory('Answer',function($resource,$http,$cookieS
                   method: 'GET',
                   params: {id_survey: id_survey,id_student:id_student}
                  });
-     		}
+     		},
+            countAllAnswers: function()
+            {
+                return $http({
+                  url:    url_api+'api/count_answers_not_open', 
+                  method: 'GET'
+                 });
+            },
+            setAnswerOpen: function(id)
+            {
+                return $http({
+                  url:    url_api+'api/set_answer_open', 
+                  method: 'GET',
+                  params: { id: id}
+                 });
+            }
         }
      }
      
-	
     return interface_api;	
 });

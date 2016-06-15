@@ -106,7 +106,7 @@ angular.module('evaluateApp')
           /* Metodo para cargar el grid
           con encuestas al abrir la vista*/
           $scope.load_grid = function(){
-              Survey.get({}, function (response) {
+              Survey.resource.get({}, function (response) {
                 $scope.surveis     = response.rows;
                 $scope.all_surveis = response;
               }, function (error) {
@@ -129,7 +129,7 @@ angular.module('evaluateApp')
           funcionalidades necesarias */
           $scope.init = function(){
 
-              Course.get({}, function (response) {
+              Course.resource.get({}, function (response) {
                 $scope.all_courses = response;
                 $scope.courses     = response.rows;  
               }, function (error) {
@@ -184,13 +184,13 @@ angular.module('evaluateApp')
                 {
                   if(i == len_selection)
                   {
-                     var response = Survey.delete({id:key},function(response){
+                     var response = Survey.resource.delete({id:key},function(response){
                          $scope.selection = [];
                          $state.reload();
                      });
                   }else
                   {
-                    var response = Survey.delete({id:key});
+                    var response = Survey.resource.delete({id:key});
                   }
                 }
                   i = i + 1;
@@ -202,7 +202,7 @@ angular.module('evaluateApp')
           encuestas*/
           $scope.delete_survey=function(survey){
               if(popupService.showPopup('Esta seguro de eliminar la encuesta?')){
-                  var response = Survey.delete({id:survey.id});
+                  var response = Survey.resource.delete({id:survey.id});
                   $state.reload();
               }
           };
@@ -210,14 +210,14 @@ angular.module('evaluateApp')
           /* Metodo para ver una encuesta */
           $scope.survey_view = function()
           {
-            $scope.survey= Survey.get({id:$stateParams.id});
+            $scope.survey= Survey.resource.get({id:$stateParams.id});
           };
 
           /* Metodo para inicializar un
           objeto encuesta*/
           $scope.survey_new = function()
           {
-            $scope.survey = new Survey();
+            $scope.survey = new Survey.resource();
             $scope.survey.id_course = '';
           };
 
@@ -297,7 +297,7 @@ angular.module('evaluateApp')
           el formulario con todos las directivas
           renderizadas*/
           $scope.load_survey=function(){
-              $scope.survey = Survey.get({id:$stateParams.id}, function (response) {   
+              $scope.survey = Survey.resource.get({id:$stateParams.id}, function (response) {   
               $(function() {
                 $timeout(function(){ 
                   $scope.survey.id_course = String(response.id_course);       

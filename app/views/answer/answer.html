@@ -10,11 +10,13 @@
             </thead>
             <tbody>
             <tr ng-repeat="answer in answers">
-                <td style="text-align:center">{{sno_answers($index)}}</td>
+                <td style="text-align:center">{{sno_answers($index)}}<span ng-hide=answer.was_open class="glyphicon glyphicon-asterisk" style="color:red" aria-hidden="true"></span></td>
                 <td>{{answer.Survey.name}}</td>
                 <td>{{answer.Student.name}}</td>
                 <td>
                     <a class="btn btn-primary" data-toggle="tooltip" title="Editar" aria-label="Editar" data-placement="top" ui-sref="dashboard.answer_view({id:answer.id})">  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    <a class="btn btn-success" data-placement="top" ng-click="open_feedback(answer)"  title="FeedBack" aria-label="FeedBack" data-toggle="modal" data-target="#feedback_modal">
+                    <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
                 </td>
             </tbody>
             </tr>
@@ -24,4 +26,25 @@
         </table>
        <paginate servicename="Answer" model="answers" src="all_answers"></paginate>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="feedback_modal" tabindex="-1" role="dialog" aria-labelledby="feedback_modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Comentario</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">      
+                    <div id="summernote"></div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="set_feedback()" class="btn btn-default" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

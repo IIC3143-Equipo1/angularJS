@@ -13,11 +13,37 @@ angular.module('evaluateApp')
   	$scope.answer;
   	$scope.answers;
   	$scope.all_answers;
+  	$scope.current_answer;
 
     $scope.sno_answers = function (index) {
         var from = 5 * ($scope.all_answers.current_page - 1) + 1;
         return from + index;
     };  
+
+    $scope.open_feedback = function(answer)
+    {
+    	$scope.current_answer = answer.id;
+    	$(document).ready(function() {
+    		if(answer.feedback != null)
+    		{
+    			$('#summernote').summernote('code', answer.feedback);
+    		}else
+    		{
+    			$('#summernote').summernote('reset');
+    		}
+    	});
+    };
+
+    $scope.set_feedback = function()
+    {
+    	$scope.answer = new Answer.resource();
+    	$scope.answer.feedback = $('#summernote').summernote('code');
+		$scope.answer.$update({id:$scope.current_answer},function(response){
+	      $scope.load_grid();
+	    }, function (error) {
+	        console.log(error);
+	    });
+    };
 
   	$scope.init = function(opt){
   		if(opt == '1')
@@ -27,6 +53,7 @@ angular.module('evaluateApp')
   		{
   			$scope.answer = Answer.resource.get({id:$stateParams.id},function(response){
   				render_form(response.Survey,opt,response.kw_answers);
+  				Answer.http.setAnswerOpen($stateParams.id);
   			});
   		}	
   	};
@@ -80,10 +107,14 @@ angular.module('evaluateApp')
 		  		});
 		  		$scope.answer.kw_answers.push(kw);
 	  		});
-	  		console.log($scope.answer);
 	  		$scope.answer.$save(function(response){
-		       //$state.go('dashboard.survey');
-		       alert('OK');
+		       $('#survey_student').html('<div class="panel panel-success">'+
+										'<div class="panel-heading">RESPUESTA RECIBIDA</div>'+
+										'<div class="panel-body">'+
+										'Muchas gracias por responder la encuesta.'+
+										'</div></div>');
+		    },function(error){
+		    	alert(error);
 		    });
   		}
   	};
@@ -96,7 +127,7 @@ angular.module('evaluateApp')
         for (var i = 0; i < len; i++) {  
             var kw_name = kw_areas[i].name;       	
     		html += '<div class="panel panel-default is_main">'+
-					'<div class="panel-heading">'+ kw_name +'</div>'+
+					'<div class="panel-heading text-centercapitalize">'+  kw_name +'</div>'+
 					'<div class="panel-body" id="'+ kw_name +'_kw">';
     		var questions = kw_areas[i].questions;
     		questions.sort(function(a,b){
@@ -204,7 +235,7 @@ angular.module('evaluateApp')
 	        {
 		    	if(!response_aux.data)
 		    	{
-		    		$scope.survey = Survey.get({id:$scope.id_survey}, function (response) { 
+		    		$scope.survey = Survey.resource.get({id:$scope.id_survey}, function (response) { 
 				    	render_form(response);   
 					});
 		       	}else

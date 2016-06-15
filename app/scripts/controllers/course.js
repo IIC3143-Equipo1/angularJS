@@ -53,13 +53,13 @@ angular.module('evaluateApp')
               {
                 if(i == len_selection)
                 {
-                   var response = Course.delete({id:key},function(response){
+                   var response = Course.resource.delete({id:key},function(response){
                        $scope.selection = [];
                        $state.reload();
                    });
                 }else
                 {
-                  var response = Course.delete({id:key});
+                  var response = Course.resource.delete({id:key});
                 }
               }
                 i = i + 1;
@@ -71,7 +71,7 @@ angular.module('evaluateApp')
       cursos*/
       $scope.delete_course=function(course){
           if(popupService.showPopup('Esta seguro de eliminar el curso?')){
-              var response = Course.delete({id:course.id},function(response)
+              var response = Course.resource.delete({id:course.id},function(response)
               {
                 $state.reload();
               });
@@ -81,14 +81,14 @@ angular.module('evaluateApp')
       /* Metodo para ver un curso */
       $scope.course_view = function()
       {
-        $scope.course= Course.get({id:$stateParams.id});
+        $scope.course= Course.resource.get({id:$stateParams.id});
       };
 
       /* Metodo para inicializar un
       objeto curso*/
       $scope.course_new = function()
       {
-        $scope.course = new Course();
+        $scope.course = new Course.resource();
       };
 
 	   /* Metodo para cargar una encuesta */
@@ -98,7 +98,7 @@ angular.module('evaluateApp')
 	 };
 
      $scope.load_course = function(){
-		$scope.course = Course.get({id:$stateParams.id}, 
+		$scope.course = Course.resource.get({id:$stateParams.id}, 
 		   function (response) {
 
 		}, function (error) {
@@ -120,7 +120,7 @@ angular.module('evaluateApp')
 
 
      $scope.load_grid = function(){
-	      Course.get({}, function (response) {
+	      Course.resource.get({}, function (response) {
 		    $scope.courses     = response.rows;
 		    $scope.all_courses = response;
 		  }, function (error) {

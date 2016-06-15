@@ -1,0 +1,40 @@
+<div>
+<div id="alert" class="notification-msg"></div>
+
+<form name="form_profile" class="form-horizontal" ng-submit="profile.save(form_profile)">
+    <fieldset>
+        <!-- Form Name -->
+        <legend><div class="container-fluid">
+        <a ui-sref="dashboard.home"class="btn btn-default navbar-btn navbar-left" formnovalidate>Volver</a>
+            <button type="submit" class="btn btn-default navbar-btn navbar-right">Guardar</button>
+        </div>
+        </legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_name">Nombre</label>
+            <div class="col-md-6">
+                <input id="txt_name" name="txt_name" ng-model="profile.user.firstName" type="text" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_name">Apellido</label>
+            <div class="col-md-6">
+                <input id="txt_name" name="txt_lastName" ng-model="profile.user.lastName" type="text" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_code">Password</label>
+            <div class="col-md-6">
+                <input id="txt_pass" name="txt_pass" ng-model="profile.user.password" ng-minlength="8" type="password" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+</div>
+

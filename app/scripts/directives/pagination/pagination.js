@@ -80,12 +80,7 @@ angular.module('evaluateApp')
                     });
                 }else
                 {
-                    var new_service = service;
-                    if(scope.servicename == 'Student' || scope.servicename == 'Answer')
-                    {
-                        new_service = service.resource;
-                    }
-                    new_service.get({
+                    service.resource.get({
                         page: newPage
                     }, function (response) {
                         angular.copy(response.rows, scope.allData.rows);
