@@ -18,7 +18,9 @@ angular
     'smart-table'
   ])
   .config(['$stateProvider','$httpProvider','$urlRouterProvider','$ocLazyLoadProvider',
-    function ($stateProvider,$httpProvider,$urlRouterProvider,$ocLazyLoadProvider,$rootscope) {
+    function ($stateProvider,$httpProvider,$urlRouterProvider,$ocLazyLoadProvider) {
+
+
 
     $httpProvider.defaults.withCredentials = true;
 
@@ -40,8 +42,7 @@ angular
     }); 
 
     $urlRouterProvider.otherwise('/login');
-
-    var checkLoggedin = function($q, $http, $state){ 
+    var checkLoggedin = function($q, $http, $state, sessionService){ 
       // Initialize a new promise 
       var deferred = $q.defer(); 
       // Make an AJAX call to check if the user is logged in 
@@ -51,6 +52,10 @@ angular
         // Authenticated 
         if (user !== '0') 
         {
+          if(sessionService.getCookieData.user_name == '')
+          {
+            sessionService.setCookieData(user);
+          }
           deferred.resolve(user); // Not Authenticated 
         }
         else { 
@@ -116,12 +121,25 @@ angular
             }
         }
     })
+      .state('entry',{
+        url:'/entry',
+        controller: 'HomeCtrl',
+        resolve:{
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'evaluateApp',
+              files:[
+                'scripts/controllers/home.js'
+              ]
+            })
+          }
+        }
+      })
       .state('dashboard.home',{
         url:'/home',
         controller: 'MainCtrl',
         templateUrl:'views/dashboard/home.html',
         resolve: {
-          loggedin: checkLoggedin,
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
               name:'evaluateApp',
@@ -263,10 +281,26 @@ angular
                         ]
                     })}
     }})
+      .state('dashboard.answer_chart',{
+        controller: 'ChartCtrl',
+        templateUrl:'views/answer/answer_chart.html',
+        url:'/answer/:id/chart/:student',
+        resolve: {
+            //loggedin: checkLoggedin,
+            loadMyDirectives:function($ocLazyLoad){
+                return $ocLazyLoad.load(
+                    {
+                        name:'evaluateApp',
+                        files:[
+                            'scripts/controllers/chart.js',
+                            'scripts/services/answer'
+                        ]
+                    })}
+    }})
       .state('login',{
         templateUrl:'views/dashboard/login.html',
         controller:'LoginCtrl',
-        url:'/login',
+        url:'/login?option',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
@@ -279,8 +313,8 @@ angular
             })
           }
         }
-    }).
-      state('dashboard.profile',{
+    })
+      .state('dashboard.profile',{
         templateUrl:'views/dashboard/profile.html',
         url:'/profile',
         resolve:{
@@ -321,6 +355,53 @@ angular
         },
         controllerAs: 'profile'
     })
+      .state('register',{
+        templateUrl:'views/dashboard/register.html',
+        url:'/register',
+        resolve: {
+          loadMyFiles:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'evaluateApp',
+              files:[
+                'scripts/controllers/login.js',
+                'scripts/services/login.js',
+                'scripts/services/general.js'
+              ]
+            })
+          }
+        },
+        controller:function($http,url_api,alertService,$state){
+          this.save = function(form){
+          if(form.txt_pass.$error.minlength){  alertService.showAlert('El password debe contener 8 o mas caracteres'); return;}
+          var data = $.param({
+               firstName: $('#txt_name').val(),
+                lastName: $('#txt_lastName').val(),
+                password: $('#txt_pass').val(),
+                username: $('#txt_username').val(),
+                   email: $('#txt_email').val()
+
+            });
+            var config = {
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            $http.post(url_api+'api/user', data, config)
+            .success(function (data, status, headers, config) {
+                $('#register').html('<div class="panel panel-success">'+
+                '<div class="panel-heading">Usuario creado</div>'+
+                '<div class="panel-body">'+
+                'Tu usuario fue creado satisfactoriamente, puedes dirigirte al login para acceder con tus credenciales.'+
+                '<br><a href="#/login" class="btn btn-default navbar-btn navbar-left" formnovalidate>Login</a>'+
+                '</div></div>');
+            })
+            .error(function (data, status, header, config) {
+              console.log(data);
+            });
+          }
+        },
+        controllerAs: 'register'
+    })
       .state('dashboard.auth',{
         templateUrl:'views/dashboard/auth.html',
         url:'/auth',
@@ -339,7 +420,7 @@ angular
               name:'chart.js',
               files:[
                 'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                'bower_components/angular-chart.js/dist/angular-chart.css'
+                //'bower_components/angular-chart.js/dist/angular-chart.css'
               ]
             }),
             $ocLazyLoad.load({
@@ -459,11 +540,12 @@ angular
                         ]
                     })}
     }})
-  }]).value('url_api', 'http://localhost:5001/evaluate/');
+  }]).value('url_api', 'http://localhost:5001/evaluate/')
     /*https://evaluat-e-api.herokuapp.com/
     //http://dsw1.ing.puc.cl/
     //http://localhost:5001/
-    /*
+    
     .run(function($state,$rootScope) {
-        $state.go('dashboard.home');
+      console.log($state);
+        $state.go('login');
     });*/

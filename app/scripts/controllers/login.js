@@ -7,7 +7,12 @@
  * Controller of the evaluateApp
  */
 angular.module('evaluateApp')
-  .controller('LoginCtrl',['$scope','Login','$state','sessionService', function($scope,Login,$stage,sessionService) {
+  .controller('LoginCtrl',['$scope','Login','$state','sessionService','$stateParams', function($scope,Login,$state,sessionService,$stateParams) {
+
+    if($state.params.option)
+    {
+      $state.go('dashboard.home');
+    }
 
     $scope.user = sessionService.getCookieData();
 
@@ -17,7 +22,7 @@ angular.module('evaluateApp')
   		var access = Login.login(username,password);
   		access.then(function(response){
         sessionService.setCookieData(response.data.user);
-  			$stage.go('dashboard.home');
+  			$state.go('dashboard.home');
   		},
   		function(error){
   			alert(error.data.error);
@@ -28,7 +33,7 @@ angular.module('evaluateApp')
     $scope.signout = function(){
       var access = Login.signout();
       access.then(function(user){
-        $stage.go('login');
+        $state.go('login');
       },
       function(error){
         alert(error.data.error);

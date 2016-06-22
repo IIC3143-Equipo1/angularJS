@@ -61,6 +61,7 @@ angular.module('evaluateApp')
   	$scope.load_grid = function()
   	{
       Answer.resource.get({}, function (response) {
+      	console.log(response);
         $scope.answers     = response.rows;
         $scope.all_answers = response;
       }, function (error) {
@@ -74,6 +75,7 @@ angular.module('evaluateApp')
 	  		$scope.answer = new Answer.resource();
 	  		$scope.answer.id_student = $scope.id_student;
 	  		$scope.answer.id_survey  = $scope.id_survey;
+	  		$scope.answer.was_answered = true;
 	  		$scope.answer.kw_answers = [];
 
 			$.each($('div .is_main'),function(i,val){
@@ -107,7 +109,7 @@ angular.module('evaluateApp')
 		  		});
 		  		$scope.answer.kw_answers.push(kw);
 	  		});
-	  		$scope.answer.$save(function(response){
+	  		$scope.answer.$update({id:$scope.current_answer},function(response){
 		       $('#survey_student').html('<div class="panel panel-success">'+
 										'<div class="panel-heading">RESPUESTA RECIBIDA</div>'+
 										'<div class="panel-body">'+
@@ -233,8 +235,10 @@ angular.module('evaluateApp')
 	        var answer_response = Answer.http.getAnswerByStudentSurvey($scope.id_survey,$scope.id_student);
 	        answer_response.then(function(response_aux)
 	        {
-		    	if(!response_aux.data)
+		    	if(!response_aux.data.was_answered)
 		    	{
+		    		$scope.current_answer = response_aux.data.id;
+
 		    		$scope.survey = Survey.resource.get({id:$scope.id_survey}, function (response) { 
 				    	render_form(response);   
 					});

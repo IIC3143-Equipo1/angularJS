@@ -8,6 +8,7 @@
                 <td><h4>Nombre</h4></td>
                 <td><h4>Código</h4></td>
                 <td><h4>Email</h4></td>
+                <td><h4>Estado</h4></td>
                 <td ng-if="is_modal_send">    
                     <div class="dropdown">
                       <button class="btn btn-danger dropdown-toggle" type="button" id="dropdown_actions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -28,13 +29,15 @@
                 <td>{{student.name}}</td>
                 <td>{{student.code}}</td>
                 <td>{{student.email}}</td>
+                <td ng-show="student.Answers.length > 0"><span class="label label-success">Enviada</span></td>
+                <td ng-show="student.Answers.length == 0"><span class="label label-warning">No enviada</span></td>
                 <td ng-if="is_modal_send">
                     <a class="btn btn-success" data-toggle="modal" ng-click="send_survey(student)">Enviar</a>
                 </td>
             </tbody>
             </tr>
             <tr ng-show="students.length == 0">
-                <td colspan="4" style="text-align:center">No Records Found..!</td>
+                <td colspan="4" style="text-align:center">No se encontraron registros..!</td>
             </tr>
         </table>
        <paginate servicename="Student" model="students" type="1" identity="current_id" src="all_students"></paginate>

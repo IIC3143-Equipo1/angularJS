@@ -337,7 +337,8 @@ angular.module('evaluateApp')
                 alert('Enviado correctamente');
             })
             .error(function (data, status, header, config) {
-              console.log(data);
+              console.log(data.full);
+              alert(data.error);
             });
           }
     }]);

@@ -17,11 +17,12 @@
                     <a class="btn btn-primary" data-toggle="tooltip" title="Editar" aria-label="Editar" data-placement="top" ui-sref="dashboard.answer_view({id:answer.id})">  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <a class="btn btn-success" data-placement="top" ng-click="open_feedback(answer)"  title="FeedBack" aria-label="FeedBack" data-toggle="modal" data-target="#feedback_modal">
                     <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                    <a class="btn btn-primary" data-toggle="tooltip" title="Graficos" aria-label="Graficos" data-placement="top" ui-sref="dashboard.answer_chart({id:answer.id,student:answer.id_student})">  <span class="glyphicon glyphicon-signal" aria-hidden="true"></span></a>
                 </td>
             </tbody>
             </tr>
             <tr ng-show="answers.length == 0">
-                <td colspan="4" style="text-align:center">No Records Found..!</td>
+                <td colspan="4" style="text-align:center">No se encontraron registros..!</td>
             </tr>
         </table>
        <paginate servicename="Answer" model="answers" src="all_answers"></paginate>

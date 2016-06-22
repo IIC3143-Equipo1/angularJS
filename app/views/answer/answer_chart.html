@@ -1,0 +1,21 @@
+<div id="chart_canvas" ng-init="especifico()">
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Reporte {{student_name}}</h1>
+        <button type="button" class="btn btn-primary pull-right" ng-click="generate_pdf()">Generar PDF</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Estadisticas generales</div>
+            <div class="panel-body">
+                <div id="surveis_chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="feedback">
+</div>
+</div>

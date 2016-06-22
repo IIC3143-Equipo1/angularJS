@@ -1,0 +1,56 @@
+<div>
+<div id="alert" class="notification-msg"></div>
+<div id="register" class="container-fluid">
+<form name="form_register" class="form-horizontal" ng-submit="register.save(form_register)">
+    <fieldset>
+        <!-- Form Name -->
+        <legend><div class="container-fluid">
+            <button type="submit" class="btn btn-default navbar-btn navbar-right">Guardar</button>
+        </div>
+        </legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_name">Nombre</label>
+            <div class="col-md-6">
+                <input id="txt_name" name="txt_name" ng-model="firstName" type="text" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_name">Apellido</label>
+            <div class="col-md-6">
+                <input id="txt_lastName" name="txt_lastName" ng-model="lastName" type="text" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_email">Email</label>
+            <div class="col-md-6">
+                <input id="txt_email" name="txt_email" ng-model="email" ng-minlength="8" type="text" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_username">Usuario</label>
+            <div class="col-md-6">
+                <input id="txt_username" name="txt_username" ng-model="username" ng-minlength="8" type="text" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="txt_code">Password</label>
+            <div class="col-md-6">
+                <input id="txt_pass" name="txt_pass" ng-model="password" ng-minlength="8" type="password" class="form-control input-md" required="required">
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+</div>
+</div>
+
