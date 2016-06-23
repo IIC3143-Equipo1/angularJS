@@ -245,7 +245,6 @@ angular.module('evaluateApp')
                   $.each( aux_question, function( key, valueAux ) {
                       var val = valueAux.value;
                       if(valueAux.name == 'required'){ 
-                        console.log(valueAux.value);
                         if(valueAux.value == 'false' || valueAux.value == 'on'){
                           val = false;
                         }else
@@ -309,7 +308,6 @@ angular.module('evaluateApp')
           renderizadas*/
           $scope.load_survey=function(){
               $scope.survey = Survey.resource.get({id:$stateParams.id}, function (response) {   
-                console.log(response);
               $(function() {
                 $timeout(function(){ 
                   $scope.survey.id_course = String(response.id_course);       
