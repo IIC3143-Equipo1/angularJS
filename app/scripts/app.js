@@ -161,7 +161,6 @@ angular
         templateUrl:'views/survey/survey.html',
         url:'/survey',
         resolve: {
-          loggedin: checkLoggedin,
           loadMyDirectives:function($ocLazyLoad){
               return $ocLazyLoad.load(
                   {
@@ -425,7 +424,10 @@ angular
             }),
             $ocLazyLoad.load({
                 name:'evaluateApp',
-                files:['scripts/controllers/chart.js']
+                files:[
+                'scripts/controllers/chart.js',
+                'scripts/services/answer.js'
+                ]
             })
           }
         }

@@ -8,6 +8,9 @@
  */
 angular.module('evaluateApp')
   .controller('ChartCtrl', ['$scope', '$timeout','$http','url_api','$stateParams','Answer', function ($scope, $timeout,$http,url_api,$stateParams,Answer) {
+    $scope.bar_visible = false;
+    $scope.pie_visible = false;
+
     $scope.generate_pdf = function(){
      html2canvas(document.getElementById('chart_canvas'), {
             onrendered: function (canvas) {
@@ -138,6 +141,7 @@ angular.module('evaluateApp')
                 change:function(){
                     this.data   = $scope.info_bar[$scope.sel_courses_gral].data;
                     this.labels = $scope.info_bar[$scope.sel_courses_gral].info;
+                    $scope.bar_visible = true;
                 },
                 click:function()
                 {
@@ -166,62 +170,66 @@ angular.module('evaluateApp')
         $http.post(url_api+'api/chart_answers', params, config)
         .success(function (data, status, headers, config) {
             $('#surveis_chart').html('');
-            $scope.info_answers = data.data;
-            if($scope.info_answers.length >0)
+            $scope.info_answers = data.data[0];
+            var keys_kw    = Object.keys($scope.info_answers);
+            var length_kw = keys_kw.length;
+            if( length_kw > 0)
             {
-            var keys_answers    = Object.keys($scope.info_answers[0]);
-            var length_answers  = keys_answers.length;
-            for( var j = 0; j < length_answers; j++ ) {
-                var info = $scope.info_answers[0][keys_answers[j]];
-
-                $('#surveis_chart').append('<div class="col-lg-6 col-sm-12"><div class="panel panel-default">'+
-                    '<div class="panel-body"><canvas id="bar_' + keys_answers[j]+'"></canvas></div></div></div>');
-
-                    var keys_values   = Object.keys(info.values);
-                    var length_values = keys_values.length;
-                    var values = [];
-                    for( var k = 0; k < length_values; k++ ) {
-                        values.push(info.values[keys_values[k]]);
+              for(var i=0;i < length_kw; i ++)
+              {   
+                var info_kw = $scope.info_answers[keys_kw[i]];
+                var keys_answers    = Object.keys(info_kw);
+                var length_answers  = keys_answers.length;
+                for( var j = 0; j < length_answers; j++ ) {
+                    var info = info_kw[keys_answers[j]];
+                    //console.log(info);
+                    $('#surveis_chart').append('<div class="col-lg-6 col-sm-6"><div class="panel panel-default">'+
+                        '<div class="panel-body"><canvas id="bar_'+ i +'_'+ keys_answers[j] +'"></canvas></div></div></div>');
+                        var keys_values   = Object.keys(info.values);
+                        var length_values = keys_values.length;
+                        var values = [];
+                        for( var k = 0; k < length_values; k++ ) {
+                            values.push(info.values[keys_values[k]]);
+                        }
+                        var ctx = document.getElementById('bar_' + i + '_' + keys_answers[j]);
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                            labels: keys_values,
+                            datasets: [
+                            {
+                                 label: '# ',
+                                 data: values,
+                                 backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]},
+                            options:{
+                                    defaultFontSize:30,
+                                     title: {
+                                        display: true,
+                                        text: data.questions[i][keys_answers[j]]
+                                    },
+                                    legend:{
+                                        display:true
+                                     }   
+                                }
+                        });
                     }
-                    var ctx = document.getElementById('bar_' + keys_answers[j]);
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                        labels: keys_values,
-                        datasets: [
-                        {
-                             label: '# ',
-                             data: values,
-                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255,99,132,1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]},
-                        options:{
-                                defaultFontSize:30,
-                                 title: {
-                                    display: true,
-                                    text: data.questions[keys_answers[j]]
-                                },
-                                legend:{
-                                    display:true
-                                 }   
-                            }
-                    });
-
                 }
             }
         })
@@ -232,6 +240,7 @@ angular.module('evaluateApp')
 
     $scope.change_survey = function()
     {
+        $scope.pie_visible = true;
         $scope.pie.data = $scope.info_pie[$scope.sel_surveis_gral].data;
         var id = $scope.info_pie[$scope.sel_surveis_gral].info.survey_id;
         $scope.chart_answers(id);
@@ -248,7 +257,6 @@ angular.module('evaluateApp')
     {
         Answer.resource.get({id:$stateParams.id},function(response)
         {
-            console.log(response);
             $scope.student_name = response.Student.name;
             $scope.chart_answers(response.Survey.id);
             $('#feedback').html(response.feedback);

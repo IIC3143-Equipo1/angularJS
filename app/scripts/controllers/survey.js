@@ -42,8 +42,8 @@ angular.module('evaluateApp')
           };
 
           /*Mensaje personalizado para información o errores*/
-          $scope.show_alert = function(message) {
-              $('#alert').html("<div class='alert alert-danger'>" +
+          $scope.show_alert = function(message,type='danger') {
+              $('#alert').html("<div class='alert alert-"+type+"'>" +
                   "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+message+"</div>");
               $('#alert').alert();
               $("#alert").fadeTo(3000, 500).slideUp(500, function(){
@@ -54,6 +54,8 @@ angular.module('evaluateApp')
           /* Metodo para agregar la directiva de crear area
           de conocimiento, retorna una promesa*/
           $scope.add_knowledge_area = function(name,kw_position = null){
+            console.log(name);
+            console.log($scope.list_knowledge_areas);
               if(name != '') {
                   if ($.inArray(name, $scope.list_knowledge_areas) == -1) {
                       var compile_element = $compile('<knowledge-area position='+ kw_position +' name=' + name + '></knowledge-area>')($scope,
@@ -240,9 +242,20 @@ angular.module('evaluateApp')
                   var question_save = new Object();
                   var question_id = value.attributes['data-question'].value;
                   var aux_question = $("div[data-question='"+question_id+"'] [data-question-info]");
+
                   question_save['position'] = key;
                   $.each( aux_question, function( key, valueAux ) {
-                      question_save[valueAux.name] = valueAux.value; 
+                      var val = valueAux.value;
+                      if(valueAux.name == 'required'){ 
+                        console.log(valueAux.value);
+                        if(valueAux.value == 'false' || valueAux.value == 'on'){
+                          val = false;
+                        }else
+                        {
+                          val = true
+                        }
+                      }
+                      question_save[valueAux.name] = val; 
                   });
                   if(value.id in $scope.list_answer_options)
                   {
@@ -255,6 +268,7 @@ angular.module('evaluateApp')
                        question_save['opt_answers'].push(answer_save);
                     }
                   }
+                  console.log(question_save);
                    kw_save['questions'].push(question_save);
                 });
                 $scope.survey.kw_areas.push(kw_save);
@@ -298,6 +312,7 @@ angular.module('evaluateApp')
           renderizadas*/
           $scope.load_survey=function(){
               $scope.survey = Survey.resource.get({id:$stateParams.id}, function (response) {   
+                console.log(response);
               $(function() {
                 $timeout(function(){ 
                   $scope.survey.id_course = String(response.id_course);       

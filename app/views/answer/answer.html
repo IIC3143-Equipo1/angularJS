@@ -1,5 +1,14 @@
-<div class="col-xs-8 col-sm-9 col-md-9" ng-init="load_grid()">
+<div class="col-xs-12 col-sm-12 col-md-12" ng-init="load_grid()">
+    <br>
     <div class="row">
+        <ol class="breadcrumb pull-left">
+          <li><a href="#/dashboard/home">Inicio</a></li>
+          <li class="active">Respuestas</li>
+        </ol>
+    </div>
+    <br>
+    <div class="row">
+     <div class="table-responsive">
         <table class="table">
             <thead>
             <tr>
@@ -15,9 +24,8 @@
                 <td>{{answer.Student.name}}</td>
                 <td>
                     <a class="btn btn-primary" data-toggle="tooltip" title="Editar" aria-label="Editar" data-placement="top" ui-sref="dashboard.answer_view({id:answer.id})">  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                    <a class="btn btn-success" data-placement="top" ng-click="open_feedback(answer)"  title="FeedBack" aria-label="FeedBack" data-toggle="modal" data-target="#feedback_modal">
-                    <span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
-                    <a class="btn btn-warning" data-toggle="tooltip" title="Graficos" aria-label="Graficos" data-placement="top" ui-sref="dashboard.answer_chart({id:answer.id,student:answer.id_student})">  <span class="glyphicon glyphicon-signal" aria-hidden="true"></span></a>
+                    <a class="btn btn-success" data-placement="top" ng-click="open_feedback(answer)"  title="FeedBack" aria-label="FeedBack" data-toggle="modal" data-target="#feedback_modal"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a>
+                    <a class="btn btn-warning" data-toggle="tooltip" title="Graficos" aria-label="Graficos" data-placement="top" ui-sref="dashboard.answer_chart({id:answer.id,student:answer.id_student})"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></a>
                 </td>
             </tbody>
             </tr>
@@ -47,5 +55,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>

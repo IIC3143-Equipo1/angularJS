@@ -28,8 +28,20 @@ angular.module('evaluateApp')
             $scope.collapseVar = x;
         };
 
-        $('#side-menu').click(function (e) {
-          $(e.target.parentNode).toggleClass('active');
+        $(document).ready(function(){
+          $("#side-menu").on('click',function(e){
+              $(e.target.parentNode).toggleClass('active');   
+          }).on('click','i',function(e) {
+              $(e.target.parentNode.parentNode).toggleClass('active'); 
+         }).on('click','span',function(e) {
+              $(e.target.parentNode.parentNode).toggleClass('active'); ;
+         });
+      });
+
+        $(document).on('click','.navbar-collapse.in',function(e) {
+            if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+                $(this).collapse('hide');
+            }
         });
         
         $scope.multiCheck = function(y){

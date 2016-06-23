@@ -129,7 +129,7 @@ angular.module('evaluateApp')
         for (var i = 0; i < len; i++) {  
             var kw_name = kw_areas[i].name;       	
     		html += '<div class="panel panel-default is_main">'+
-					'<div class="panel-heading text-centercapitalize">'+  kw_name +'</div>'+
+					'<div class="panel-heading text-capitalize">'+  kw_name +'</div>'+
 					'<div class="panel-body" id="'+ kw_name +'_kw">';
     		var questions = kw_areas[i].questions;
     		questions.sort(function(a,b){

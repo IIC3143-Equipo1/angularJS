@@ -1,6 +1,15 @@
-<a ui-sref="dashboard.course_new" class="btn-primary btn-lg nodecoration">Agregar nuevo curso</a>
-<div class="col-xs-8 col-sm-9 col-md-9" ng-init="load_grid()">
+<div class="col-xs-12 col-sm-12 col-md-12" ng-init="load_grid()">
+    <br>
     <div class="row">
+        <ol class="breadcrumb pull-left">
+          <li><a href="#/dashboard/home">Inicio</a></li>
+          <li class="active">Cursos</li>
+        </ol>
+        <a ui-sref="dashboard.course_new" class="btn-primary btn nodecoration pull-right">Agregar curso</a>
+    </div>
+    <br>
+    <div class="row">
+    <div class="table-responsive">
         <table class="table">
             <thead>
             <tr>

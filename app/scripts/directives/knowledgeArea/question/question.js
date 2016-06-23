@@ -24,6 +24,7 @@ angular.module('evaluateApp')
                     if($scope.kw && $scope.quest)
                     {
                         $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
+                        console.log($scope.questionx);
                         $scope.questionx.required = Boolean($scope.questionx.required);
                     }
                 }
