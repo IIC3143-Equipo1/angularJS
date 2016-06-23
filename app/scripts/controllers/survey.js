@@ -14,7 +14,7 @@ angular.module('evaluateApp')
           $scope.list_answer_options  = [];
           $scope.selection            = [];
           $scope.selection_students   = [];
-          $scope.current_survey_id;    
+          $scope.current_survey_id;
           $scope.current_answer;
           $scope.current_id;
           $scope.is_modal_send = true;
@@ -22,12 +22,12 @@ angular.module('evaluateApp')
           $scope.sno_students = function (index) {
             var from = 5 * ($scope.all_students.current_page - 1) + 1;
             return from + index;
-          };  
+          };
 
           $scope.sno_courses = function (index) {
             var from = 5 * ($scope.all_courses.current_page - 1) + 1;
             return from + index;
-          }; 
+          };
 
           $scope.select_course = function(course){
             $('#sel_course').val(course.id);
@@ -56,23 +56,42 @@ angular.module('evaluateApp')
           $scope.add_knowledge_area = function(name,kw_position = null){
             console.log(name);
             console.log($scope.list_knowledge_areas);
-              if(name != '') {
-                  if ($.inArray(name, $scope.list_knowledge_areas) == -1) {
-                      var compile_element = $compile('<knowledge-area position='+ kw_position +' name=' + name + '></knowledge-area>')($scope,
-                        function(clone,scope){
-                          angular.element(document.getElementById('list_kw_areas')).append(clone); 
-                          $scope.list_knowledge_areas.push(name);
-                          $('#txt_knowledge_area').val('');
-                          $('#txt_knowledge_area').focus();
-                      });
-                  } else {
-                      $scope.show_alert('Area de conocimiento ya ha sido agregada.');
-                  }
-              }else
-              {
-                  $scope.show_alert('Debe seleccionar o digitar un area de conocimiento.');
+            // check a name is provided
+            if (name) {
+               // check name not already in use
+              if ($.inArray(name, $scope.list_knowledge_areas) == -1) {
+                var compile_element = $compile(`<knowledge-area position=${kw_position} name=${name} questions={{questions}}></knowledge-area>`)($scope,
+                function (clone, scope) {
+                  angular.element(document.getElementById('list_kw_areas')).append(clone);
+                  $scope.list_knowledge_areas.push(name);
+                  $('#txt_knowledge_area').val('');
+                  $('#txt_knowledge_area').focus();
+                });
+              } else {
+                $scope.show_alert('Area de conocimiento ya ha sido agregada.');
               }
-              return true;
+            } else {
+              $scope.show_alert('Debe seleccionar o digitar un area de conocimiento.');
+            }
+            return true;
+          };
+
+          /**
+           * load an existing knowledge area retrieved from the server
+           * @index: the index of the knowledge area in the array retrieved from the server
+           */
+          $scope.load_knowledge_area = function(index) {
+            var template =
+            `<knowledge-area
+              position='survey.kw_areas[${index}].position'
+              name='survey.kw_areas[${index}].name'
+              questions='survey.kw_areas[${index}].questions'}>
+            </knowledge-area>`;
+            $compile(template)
+            ($scope, function (clone, scope) {
+              angular.element(document.getElementById('list_kw_areas')).append(clone);
+              $scope.list_knowledge_areas.push(name);
+            });
           };
 
           /* Metodo para agrega la directiva de lista de respuestas
@@ -98,7 +117,7 @@ angular.module('evaluateApp')
             }
           };
 
-          /*Metodo para obtener el numero de 
+          /*Metodo para obtener el numero de
           registro en el grid de encuestas */
           $scope.sno = function (index) {
               var from = 5 * ($scope.all_surveis.current_page - 1) + 1;
@@ -117,7 +136,7 @@ angular.module('evaluateApp')
           };
 
           $scope.load_grid_students = function(survey){
-            var result = Student.http.getStudentsByCourse(survey.id_course,1); 
+            var result = Student.http.getStudentsByCourse(survey.id_course,1);
             result.then(function(response){
               $scope.students     = response.data.rows;
               $scope.all_students = response.data;
@@ -133,7 +152,7 @@ angular.module('evaluateApp')
 
               Course.resource.get({}, function (response) {
                 $scope.all_courses = response;
-                $scope.courses     = response.rows;  
+                $scope.courses     = response.rows;
               }, function (error) {
                   $scope.courses = [];
               });
@@ -159,7 +178,7 @@ angular.module('evaluateApp')
                   $('#txt_answer').val('');
                   $('#txt_answer').focus();
                   $("#list_answer_options").empty();
-      
+
                   if($scope.list_answer_options[e.relatedTarget.attributes['data-parent'].value]) {
                       for (var i = 0; i < $scope.list_answer_options[e.relatedTarget.attributes['data-parent'].value].length; i++) {
                           angular.element(document.getElementById('list_answer_options')).append(
@@ -173,7 +192,7 @@ angular.module('evaluateApp')
                   $scope.current_answer = e.relatedTarget.attributes['data-parent'].value;
               });
 
-          };  
+          };
 
           /* Metodo para eliminar masivamente
           encuestas*/
@@ -246,7 +265,7 @@ angular.module('evaluateApp')
                   question_save['position'] = key;
                   $.each( aux_question, function( key, valueAux ) {
                       var val = valueAux.value;
-                      if(valueAux.name == 'required'){ 
+                      if(valueAux.name == 'required'){
                         console.log(valueAux.value);
                         if(valueAux.value == 'false' || valueAux.value == 'on'){
                           val = false;
@@ -255,7 +274,7 @@ angular.module('evaluateApp')
                           val = true
                         }
                       }
-                      question_save[valueAux.name] = val; 
+                      question_save[valueAux.name] = val;
                   });
                   if(value.id in $scope.list_answer_options)
                   {
@@ -283,7 +302,7 @@ angular.module('evaluateApp')
             if(!$("#txt_name").val()){$scope.show_alert('Debes digitar un nombre '); return false;}
             if($("#sel_course").val() == 0 || $("#sel_course").val() == null){$scope.show_alert('Debes seleccionar un curso '); return false;}
             if($scope.list_knowledge_areas.length == 0){$scope.show_alert('Debes agregar al menos un area de conocimiento '); return false;}
-           
+
              $scope.prepare_data();
               $scope.survey.$save(function(response){
                 $state.go('dashboard.survey');
@@ -303,36 +322,42 @@ angular.module('evaluateApp')
               $state.go('dashboard.survey');
             }, function (error) {
                 console.log(error);
-            }); 
+            });
           };
 
 
           /* Metodo que se encarga de cargar
           el formulario con todos las directivas
           renderizadas*/
-          $scope.load_survey=function(){
-              $scope.survey = Survey.resource.get({id:$stateParams.id}, function (response) {   
-                console.log(response);
-              $(function() {
-                $timeout(function(){ 
-                  $scope.survey.id_course = String(response.id_course);       
-                  if(response.kw_areas)
-                  {
-                    var len = response.kw_areas.length;
-                    for (var i = 0; i < len; i++) {
-                      var kw = response.kw_areas[i];
-                      var kw_promise = $scope.add_knowledge_area(kw.name,i);
+          $scope.load_survey = function() {
+            $scope.survey = Survey.resource.get(
+              // params
+              { id: $stateParams.id },
+              // success callback
+              function (response) {
+                console.log("--------> load_survey:: success!!");
+                console.log("response = ", response);
+                $(function() {
+                  $timeout(function(){
+                    $scope.survey.id_course = String(response.id_course);
+                    if(response.kw_areas)
+                    {
+                      $scope.survey.kw_areas = response.kw_areas;
+                      var len = response.kw_areas.length;
+                      for (var i = 0; i < len; i++) $scope.load_knowledge_area(i);
                     }
-                  }
-                  $('#list_kw_areas').sortable({
+                    $('#list_kw_areas').sortable({
                       handle: ".panel-heading"
+                    });
                   });
                 });
-              }); 
-            }, function (error) {
+              },
+              // error callback
+              function (error) {
                 console.log(error);
                 $scope.surveis = [];
-            });
+              }
+            );
           };
 
           $scope.send_survey = function(student){

@@ -13,37 +13,38 @@ angular.module('evaluateApp')
             restrict: 'E',
             replace: true,
             scope: {
-                'parent'   :'@',
-                'name'     :'@',
-                'kw'       :'@',
-                'quest'    :'@'
+              parent: '@',
+              name: '@',
+              kw: '@',
+              quest: '@',
             },
             controller:function($scope){
-                if($scope.$parent.survey)
-                {
-                    if($scope.kw && $scope.quest)
-                    {
-                        $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
-                        console.log($scope.questionx);
-                        $scope.questionx.required = Boolean($scope.questionx.required);
-                    }
-                }
-                $scope.delete_question = function(name,parent) {
-                    $('#'+name).parent().remove();
-                    $scope.$parent.list_answer_options[name] = [];
-                };
-
-                $scope.is_not_open_question = function (name) {
-                    var value = $('#'+name+'_sel_question_type').val();
-                    if(value == 1 || value == 2)
-                    {
-                        return true;
-                    }else
-                    {
-                        return false;
-                    }
-
-                };
+              console.log("ka-question:: $scope = ", $scope);
+                // if($scope.$parent.survey)
+                // {
+                //     if($scope.kw && $scope.quest)
+                //     {
+                //         $scope.questionx = $scope.$parent.survey.kw_areas[$scope.kw].questions[$scope.quest];
+                //         console.log($scope.questionx);
+                //         $scope.questionx.required = Boolean($scope.questionx.required);
+                //     }
+                // }
+                // $scope.delete_question = function(name,parent) {
+                //     $('#'+name).parent().remove();
+                //     $scope.$parent.list_answer_options[name] = [];
+                // };
+                //
+                // $scope.is_not_open_question = function (name) {
+                //     var value = $('#'+name+'_sel_question_type').val();
+                //     if(value == 1 || value == 2)
+                //     {
+                //         return true;
+                //     }else
+                //     {
+                //         return false;
+                //     }
+                //
+                // };
           }
         }
     }).directive("addQuestion", function($compile){
