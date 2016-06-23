@@ -54,8 +54,6 @@ angular.module('evaluateApp')
           /* Metodo para agregar la directiva de crear area
           de conocimiento, retorna una promesa*/
           $scope.add_knowledge_area = function(name,kw_position = null){
-            console.log(name);
-            console.log($scope.list_knowledge_areas);
               if(name != '') {
                   if ($.inArray(name, $scope.list_knowledge_areas) == -1) {
                       var compile_element = $compile('<knowledge-area position='+ kw_position +' name=' + name + '></knowledge-area>')($scope,
@@ -268,7 +266,6 @@ angular.module('evaluateApp')
                        question_save['opt_answers'].push(answer_save);
                     }
                   }
-                  console.log(question_save);
                    kw_save['questions'].push(question_save);
                 });
                 $scope.survey.kw_areas.push(kw_save);

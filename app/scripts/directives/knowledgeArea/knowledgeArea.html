@@ -21,8 +21,14 @@
         </div>
     </div>
     <div class="panel-group" id="list_ka_{{name}}" role="tablist" aria-multiselectable="true">
-        <!--<ka-question parent="{{name}}" name="{{name}}-question01"></ka-question>
-        <ka-question parent="{{name}}" name="{{name}}-question02"></ka-question>-->
+        <div ng-repeat="question in questions" ng-init="parentName = name">
+        <!--<ka-question
+          kw='{{question.position}}'
+          quest='{{$index}}'
+          parent='{{parentName}}'
+          name='{{parentName}}_question{{$index + 1}}'
+        ></ka-question>-->
+      </div>
     </div>
     </div>
     </div>

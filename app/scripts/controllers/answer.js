@@ -61,7 +61,6 @@ angular.module('evaluateApp')
   	$scope.load_grid = function()
   	{
       Answer.resource.get({}, function (response) {
-      	console.log(response);
         $scope.answers     = response.rows;
         $scope.all_answers = response;
       }, function (error) {

@@ -13,7 +13,7 @@ angular.module('evaluateApp')
     {
       $state.go('dashboard.home');
     }
-
+    
     $scope.user = sessionService.getCookieData();
 
   	$scope.login = function(){
