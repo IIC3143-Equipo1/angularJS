@@ -11,7 +11,10 @@ app.use(express.static(path.join(__dirname, 'app')));
 
 // development only
 if ('development' == app.get('env')) {
-	app.use(bodyParser());
+	app.use(bodyParser.urlencoded({
+		extended: true
+	}))
+	app.use(bodyParser.json());
 	app.use(methodOverride());
 	app.use(function(err, req, res, next) {
 	  console.log(err);
@@ -27,4 +30,3 @@ app.use(function(req, res, next) {
   var server = app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + server.address().port);
   });
-

@@ -13,12 +13,12 @@ angular.module('evaluateApp').factory('Survey',function($resource,$cookieStore,u
             countAllSurveis: function()
             {
                 return $http({
-                  url:    url_api+'api/count_all_surveis', 
+                  url:    url_api+'api/count_all_surveis',
                   method: 'GET'
                  });
             }
         }
-     } 
-	
-    return interface_api;	
+     }
+
+    return interface_api;
 });
